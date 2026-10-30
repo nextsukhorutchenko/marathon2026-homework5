@@ -74,6 +74,15 @@ describe('tokenInterceptor', () => {
     expect(toastService.error).toHaveBeenCalledWith('Overlaps', 'Error');
   });
 
+  it('keeps background group status failures silent in the guest branch', () => {
+    let status = 0;
+    const url = 'https://test.api/guest/groups/group/status';
+    http.get(url, { context: new HttpContext().set(SKIP_ERROR_TOAST, true) }).subscribe({ error: error => status = error.status });
+    httpMock.expectOne(url).flush({ error: 'Unavailable' }, { status: 500, statusText: 'Server Error' });
+    expect(status).toBe(500);
+    expect(toastService.error).not.toHaveBeenCalled();
+  });
+
   it('does not show a toast but still rethrows when SKIP_ERROR_TOAST is set', () => {
     let receivedStatus: number | undefined;
     http

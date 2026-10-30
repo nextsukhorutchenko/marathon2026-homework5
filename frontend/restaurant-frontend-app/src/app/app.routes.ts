@@ -91,17 +91,22 @@ export const routes: Routes = [
       {
         path: 'guest-pre-order-expired',
         loadComponent: () =>
-          import('./pages/guest-pre-order-expired-page/guest-pre-order-expired-page.component').then(
-            (m) => m.GuestPreOrderExpiredPageComponent
-          ),
+          import(
+            './pages/guest-pre-order-expired-page/guest-pre-order-expired-page.component'
+          ).then((m) => m.GuestPreOrderExpiredPageComponent),
       },
       {
         path: 'reservations/:reservationId/group-pre-order',
+        redirectTo: 'reservations/:reservationId/group-order',
+        pathMatch: 'full',
+      },
+      {
+        path: 'reservations/:reservationId/group-order',
         canActivate: [AuthGuard],
         data: { authorized: true },
         loadComponent: () =>
-          import('./pages/group-pre-order-page/group-pre-order-page.component').then(
-            component => component.GroupPreOrderPageComponent,
+          import('./pages/group-order-page/group-order-page.component').then(
+            (component) => component.GroupOrderPageComponent
           ),
       },
       {

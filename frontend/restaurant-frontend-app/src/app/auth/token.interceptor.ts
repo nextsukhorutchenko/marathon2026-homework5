@@ -22,6 +22,7 @@ export const tokenInterceptor: HttpInterceptorFn = (
   if (req.url.includes('/guest/') && !ownerGroupSessions) {
     return next(req).pipe(
       catchError((error: HttpErrorResponse) => {
+        if (req.context.get(SKIP_ERROR_TOAST)) return throwError(() => error);
         console.log(error);
 
         let errorMessage = 'An unexpected error occurred.';
