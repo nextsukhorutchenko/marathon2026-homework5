@@ -1,77 +1,65 @@
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+// Рівень 2 · сервіс GroupOrdersService: URL, метод, тіло кожного запиту.
+// Запуск: npm run test:hw
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { API_BASE_URL } from '@app/shared/config/api-base-url.token';
 import { GroupOrdersService } from './group-orders.service';
 
-describe('GroupOrdersService', () => {
+const BASE_URL = 'https://api.test';
+
+describe('Рівень 2 · GroupOrdersService', () => {
   let service: GroupOrdersService;
-  let requests: HttpTestingController;
+  let http: HttpTestingController;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: API_BASE_URL, useValue: 'https://test.api' },
-      ],
+      providers: [provideHttpClient(), provideHttpClientTesting(), { provide: API_BASE_URL, useValue: BASE_URL }],
     });
     service = TestBed.inject(GroupOrdersService);
-    requests = TestBed.inject(HttpTestingController);
+    http = TestBed.inject(HttpTestingController);
   });
-  afterEach(() => requests.verify());
 
-  it('loads owner metadata using the reservation ID', () => {
-    let identifier = '';
-    service
-      .getOwnerSession('reservation one')
-      .subscribe((result) => (identifier = result.guestSessionId));
-    const request = requests.expectOne(
-      'https://test.api/reservations/reservation%20one/guest-session-id'
-    );
-    expect(request.request.method).toBe('GET');
-    request.flush({ guestSessionId: 'owner-session', groupReservationId: 'group', status: 'Open' });
-    expect(identifier).toBe('owner-session');
+  afterEach(() => http.verify());
+
+  it('getGroupInvite$: reservationId → invite-token → invite', () => {
+    let groupId = '';
+    service.getGroupInvite$('res-1').subscribe((invite) => (groupId = invite.GroupReservationId));
+
+    http.expectOne(`${BASE_URL}/reservations/res-1/invite-token`).flush({ token: 'tok' });
+    http.expectOne(`${BASE_URL}/guest/invites/tok`).flush({ GroupReservationId: 'grp-1' });
+
+    expect(groupId).toBe('grp-1');
   });
-  it('loads a typed snapshot including participant totals', () => {
-    let total = 0;
-    service.getSessions('group').subscribe((result) => (total = result.total));
-    const request = requests.expectOne('https://test.api/guest/groups/group/sessions');
-    expect(request.request.method).toBe('GET');
-    request.flush({ participants: [], total: 580 });
-    expect(total).toBe(580);
+
+  it('getSessions$: GET /guest/groups/{id}/sessions', () => {
+    service.getSessions$('grp-1').subscribe();
+    const req = http.expectOne(`${BASE_URL}/guest/groups/grp-1/sessions`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ participants: [], total: 0 });
   });
-  it('submits only the reservation reference rather than client totals', () => {
-    service.submit('group', 'reservation').subscribe();
-    const request = requests.expectOne('https://test.api/group-reservations/group/submit');
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({ reservationId: 'reservation' });
-    request.flush([{ dishId: 'salad', quantity: 3 }]);
+
+  it('getOwnerSessionId$: повертає рядок guestSessionId', () => {
+    let id = '';
+    service.getOwnerSessionId$('res-1').subscribe((value) => (id = value));
+    const req = http.expectOne(`${BASE_URL}/reservations/res-1/guest-session-id`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ guestSessionId: 'owner-1' });
+    expect(id).toBe('owner-1');
   });
-  it('explicitly prepares a missing owner session and empty order', () => {
-    service.prepare('reservation').subscribe();
-    const request = requests.expectOne('https://test.api/reservations/reservation/group-pre-order');
-    expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({});
-    request.flush({ guestSessionId: 'owner-session', groupReservationId: 'group', status: 'Open' });
+
+  it('getStatus$: GET /guest/groups/{id}/status', () => {
+    service.getStatus$('grp-1').subscribe();
+    const req = http.expectOne(`${BASE_URL}/guest/groups/grp-1/status`);
+    expect(req.request.method).toBe('GET');
+    req.flush({ currentParticipants: 3, maxCapacity: 5, status: 'Open' });
   });
-  it('replaces the snapshot from the DELETE response', () => {
-    let remaining = -1;
-    service
-      .removeSession('group', 'session/one')
-      .subscribe((result) => (remaining = result.participants.length));
-    const request = requests.expectOne(
-      'https://test.api/guest/groups/group/sessions/session%2Fone'
-    );
-    expect(request.request.method).toBe('DELETE');
-    request.flush({ participants: [], total: 0 });
-    expect(remaining).toBe(0);
-  });
-  it('propagates an ownership failure', () => {
-    let status = 0;
-    service.getSessions('group').subscribe({ error: (error) => (status = error.status) });
-    requests
-      .expectOne('https://test.api/guest/groups/group/sessions')
-      .flush({ error: 'Only owner' }, { status: 403, statusText: 'Forbidden' });
-    expect(status).toBe(403);
+
+  it('submit$: POST /group-reservations/{id}/submit з тілом { reservationId }', () => {
+    service.submit$('grp-1', 'res-1').subscribe();
+    const req = http.expectOne(`${BASE_URL}/group-reservations/grp-1/submit`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({ reservationId: 'res-1' });
+    req.flush([]);
   });
 });

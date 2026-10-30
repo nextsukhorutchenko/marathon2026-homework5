@@ -1,5 +1,9 @@
 # EPAM IT Marathon 2026 — Backend (.NET), ДЗ №5
 
+## Frontend — ДЗ №6
+
+Owner групового pre-order: усі три рівні та Remove Guest. [Опис, перевірки й скриншоти](docs/homework6/README.md). Демо локально: `http://localhost:4200/reservations/demo-reservation/group-order?demo`. `npm run test:hw` — 85/85; розширений набір — 111/111.
+
 Груповий pre-order для Owner: усі три рівні ДЗ реалізовані в .NET backend і підключені до Angular.
 
 | Рівень | Endpoint | Результат |

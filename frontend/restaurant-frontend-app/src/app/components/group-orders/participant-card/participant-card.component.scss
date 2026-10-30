@@ -1,0 +1,124 @@
+@use 'app/shared/styles/abstracts/colors' as color;
+
+:host {
+  display: block;
+  min-width: 0;
+}
+.card {
+  background: color.$neutral-0;
+  padding: 24px;
+  border-radius: 18px;
+}
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.chip {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  background: color.$orange-30;
+  color: color.$neutral-700;
+}
+.chip.submitted {
+  background: color.$green-100;
+  color: color.$green-800;
+}
+.remove {
+  background: none;
+  color: color.$neutral-900;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 2px 0 4px;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.items {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto auto;
+  gap: 14px;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid color.$neutral-100;
+  font-size: 14px;
+}
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.initial {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  background: color.$green-100;
+  color: color.$green-800;
+}
+.dish-name {
+  overflow-wrap: anywhere;
+}
+.quantity,
+.price {
+  white-space: nowrap;
+}
+.price {
+  text-align: right;
+  min-width: 65px;
+  font-weight: 500;
+}
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  padding-top: 18px;
+  font-weight: 600;
+}
+.empty {
+  color: color.$neutral-600;
+  padding: 12px 0;
+}
+button:focus-visible {
+  outline: 2px solid color.$green-600;
+  outline-offset: 4px;
+}
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  h2 {
+    font-size: 16px;
+  }
+  header {
+    gap: 8px;
+  }
+  .remove {
+    font-size: 12px;
+  }
+  li {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+  .price {
+    grid-column: 2 / 4;
+    min-width: 0;
+  }
+}

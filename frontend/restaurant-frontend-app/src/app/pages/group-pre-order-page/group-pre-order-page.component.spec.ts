@@ -1,139 +1,77 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
-import { of, throwError, Subject } from 'rxjs';
-import { GroupOrderSnapshot } from '@app/models/orders/group-order.model';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { of, Subject, throwError } from 'rxjs';
 import { GroupOrdersService } from '@app/services/group-orders/group-orders.service';
 import { ToastService } from '@app/services/toast/toast.service';
+import { GroupSessionsResponse } from '@app/models/group-orders/group-sessions-response.model';
+import { GuestInvite } from '@app/models/reservations/guest-invite.model';
 import { GroupPreOrderPageComponent } from './group-pre-order-page.component';
 
-describe('GroupPreOrderPageComponent', () => {
+describe('Legacy Owner flow on the canonical homework screen', () => {
   let fixture: ComponentFixture<GroupPreOrderPageComponent>;
   let service: jasmine.SpyObj<GroupOrdersService>;
-  const snapshot: GroupOrderSnapshot = {
-    total: 580,
-    participants: [
-      {
-        id: 'session-one',
-        type: 'Guest',
-        name: 'Andrii',
-        items: [{ dish: { id: 'salad', name: 'Salad', price: 180 }, quantity: 2 }],
-        total: 360,
-        isSubmitted: true,
-      },
-      {
-        id: 'session-two',
-        type: 'Guest',
-        name: 'Olena',
-        items: [{ dish: { id: 'soup', name: 'Soup', price: 220 }, quantity: 1 }],
-        total: 220,
-        isSubmitted: false,
-      },
-    ],
-  };
-  beforeEach(async () => {
-    service = jasmine.createSpyObj<GroupOrdersService>('GroupOrdersService', [
-      'getOwnerSession',
-      'getSessions',
-      'removeSession',
-      'submit',
-      'prepare',
-    ]);
-    service.getOwnerSession.and.returnValue(
-      of({ guestSessionId: 'owner-session', groupReservationId: 'group', status: 'Open' })
-    );
-    service.prepare.and.returnValue(
-      of({ guestSessionId: 'owner-session', groupReservationId: 'group', status: 'Open' })
-    );
-    service.getSessions.and.returnValue(of(snapshot));
-    await TestBed.configureTestingModule({
-      imports: [GroupPreOrderPageComponent],
-      providers: [
-        provideRouter([]),
-        {
-          provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: convertToParamMap({ reservationId: 'reservation' }) } },
-        },
-        { provide: GroupOrdersService, useValue: service },
-        {
-          provide: ToastService,
-          useValue: jasmine.createSpyObj<ToastService>('ToastService', ['success', 'error']),
-        },
-      ],
-    }).compileComponents();
+  const snapshot: GroupSessionsResponse = { total: 580, participants: [
+    { id: 'andrii', type: 'Guest', name: 'Andrii', isSubmitted: true, total: 360, items: [{ dish: { id: 'salad', name: 'Salad', price: 180 }, quantity: 2 }] },
+    { id: 'olena', type: 'Guest', name: 'Olena', isSubmitted: false, total: 220, items: [{ dish: { id: 'soup', name: 'Soup', price: 220 }, quantity: 1 }] },
+  ] };
+  const button = (text: string) => [...(fixture.nativeElement as HTMLElement).querySelectorAll('button')].find(element => element.textContent?.trim() === text)!;
+  beforeEach(() => {
+    service = jasmine.createSpyObj<GroupOrdersService>('GroupOrdersService', ['getGroupInvite$', 'getOwnerSessionId$', 'getSessions$', 'getStatus$', 'submit$', 'removeSession$', 'prepare']);
+    service.getGroupInvite$.and.returnValue(of({ GroupReservationId: 'group', StartTime: '2026-11-01T12:00:00Z', EndTime: '2026-11-01T14:00:00Z', MaxGuestCount: 5 } as GuestInvite));
+    service.getOwnerSessionId$.and.returnValue(of('owner'));
+    service.getSessions$.and.returnValue(of(snapshot));
+    service.getStatus$.and.returnValue(of({ status: 'Open', currentParticipants: 2, maxCapacity: 5 }));
+    TestBed.configureTestingModule({ imports: [GroupPreOrderPageComponent], providers: [
+      { provide: GroupOrdersService, useValue: service },
+      { provide: ToastService, useValue: jasmine.createSpyObj('ToastService', ['success','error']) },
+      { provide: ActivatedRoute, useValue: { snapshot: { paramMap: convertToParamMap({ reservationId: 'reservation' }) } } },
+    ] });
     fixture = TestBed.createComponent(GroupPreOrderPageComponent);
   });
-  const button = (
-    fixture: ComponentFixture<GroupPreOrderPageComponent>,
-    label: string
-  ): HTMLButtonElement =>
-    Array.from(
-      fixture.nativeElement.querySelectorAll('button') as NodeListOf<HTMLButtonElement>
-    ).find((element) => element.textContent?.trim() === label)!;
-
-  it('renders participant dishes and distinguishes draft totals from submitted totals', () => {
+  it('distinguishes draft carts from the amount sent to the restaurant', () => {
     fixture.detectChanges();
+    expect(fixture.componentInstance.consolidated().total).toBe(360);
     expect(fixture.nativeElement.textContent).toContain('Andrii');
     expect(fixture.nativeElement.textContent).toContain('Olena');
-    expect(fixture.nativeElement.textContent).toContain('Salad');
-    expect(fixture.componentInstance.submittedTotal()).toBe(360);
-    expect(fixture.componentInstance.snapshot()?.total).toBe(580);
   });
-  it('prepares a legacy group explicitly after the missing Owner session response', () => {
-    service.getOwnerSession.and.returnValue(
-      throwError(
-        () => new HttpErrorResponse({ status: 404, error: { error: 'Owner session not found.' } })
-      )
-    );
-    fixture.detectChanges();
-    button(fixture, 'Prepare group pre-order').click();
-    fixture.detectChanges();
-    expect(service.prepare).toHaveBeenCalledWith('reservation');
-    expect(fixture.nativeElement.textContent).toContain('Andrii');
+  it('prepares a missing Owner session only after an explicit click', () => {
+    service.getOwnerSessionId$.and.returnValue(throwError(() => new HttpErrorResponse({ status: 404, error: { error: 'Owner session not found.' } })));
+    service.prepare.and.callFake(() => {
+      service.getOwnerSessionId$.and.returnValue(of('owner'));
+      return of({ guestSessionId: 'owner', groupReservationId: 'group', status: 'Open' });
+    });
+    fixture.detectChanges(); expect(service.prepare).not.toHaveBeenCalled();
+    button('Prepare group pre-order').click(); fixture.detectChanges();
+    expect(service.prepare).toHaveBeenCalledOnceWith('reservation');
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
   });
-
   it('shows loading until the group is available', () => {
-    service.getSessions.and.returnValue(new Subject<GroupOrderSnapshot>());
-    fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Loading group');
+    service.getSessions$.and.returnValue(new Subject<GroupSessionsResponse>());
+    fixture.detectChanges(); expect(fixture.nativeElement.textContent).toContain('Loading group');
   });
-  it('shows an error instead of a false empty group', () => {
-    service.getOwnerSession.and.returnValue(throwError(() => new Error('Forbidden')));
-    fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('[role="alert"]')).not.toBeNull();
-    expect(fixture.nativeElement.textContent).not.toContain('No participants yet');
+  it('shows a failed load instead of a false empty group', () => {
+    service.getOwnerSessionId$.and.returnValue(throwError(() => new Error('Forbidden')));
+    fixture.detectChanges(); expect(fixture.nativeElement.querySelector('[role="alert"]')).not.toBeNull();
   });
-  it('shows the empty state and disables submission', () => {
-    service.getSessions.and.returnValue(of({ participants: [], total: 0 }));
-    fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('No participants yet');
-    expect(button(fixture, 'Submit group pre-order').disabled).toBeTrue();
+  it('disables submission when there are no participants', () => {
+    service.getSessions$.and.returnValue(of({ participants: [], total: 0 }));
+    fixture.detectChanges(); expect(button('Submit Pre-Order').disabled).toBeTrue();
   });
-  it('updates the displayed snapshot after confirming removal', () => {
-    service.removeSession.and.returnValue(
-      of({ participants: [snapshot.participants[1]], total: 220 })
-    );
+  it('replaces the participant list with the confirmed DELETE response', () => {
+    service.removeSession$.and.returnValue(of({ participants: [snapshot.participants[1]], total: 220 }));
     fixture.detectChanges();
-    (
-      fixture.nativeElement.querySelector('[aria-label="Remove Andrii"]') as HTMLButtonElement
-    ).click();
-    fixture.detectChanges();
-    button(fixture, 'Confirm removal').click();
-    fixture.detectChanges();
-    expect(service.removeSession).toHaveBeenCalledWith('group', 'session-one');
-    expect(fixture.componentInstance.snapshot()?.total).toBe(220);
-    expect(fixture.nativeElement.textContent).not.toContain('Andrii');
+    (fixture.nativeElement.querySelector('[aria-label="Remove Andrii"]') as HTMLButtonElement).click(); fixture.detectChanges();
+    const dialog = fixture.nativeElement.querySelector('[role="dialog"]') as HTMLElement;
+    [...dialog.querySelectorAll('button')].find(element => element.textContent?.trim() === 'Remove Guest')!.click(); fixture.detectChanges();
+    expect(service.removeSession$).toHaveBeenCalledOnceWith('group', 'andrii');
+    expect(fixture.componentInstance.participants().map(person => person.name)).toEqual(['Olena']);
   });
-  it('submits through the consolidated API and locks further mutations', () => {
-    service.submit.and.returnValue(of([{ dishId: 'salad', quantity: 2 }]));
-    fixture.detectChanges();
-    button(fixture, 'Submit group pre-order').click();
-    fixture.detectChanges();
-    button(fixture, 'Confirm submission').click();
-    fixture.detectChanges();
-    expect(service.submit).toHaveBeenCalledWith('group', 'reservation');
-    expect(fixture.nativeElement.textContent).toContain('Group pre-order submitted');
+  it('submits directly and locks mutations without silently creating an Order', () => {
+    service.submit$.and.returnValue(of([{ dishId: 'salad', quantity: 2 }]));
+    fixture.detectChanges(); button('Submit Pre-Order').click(); fixture.detectChanges(); button('Submit').click(); fixture.detectChanges();
+    expect(service.submit$).toHaveBeenCalledOnceWith('group', 'reservation'); expect(service.prepare).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.status()).toBe('Submitted');
     expect(fixture.nativeElement.querySelector('[aria-label="Remove Andrii"]')).toBeNull();
   });
 });

@@ -1,0 +1,210 @@
+{
+  "completedAtUtc": "2026-10-30T17:04:29.963273+00:00",
+  "frontendVersion": "1.1.3",
+  "scope": {
+    "levels": [
+      1,
+      2,
+      3
+    ],
+    "removeGuestBonus": true
+  },
+  "tests": {
+    "homework": {
+      "passed": 85,
+      "failed": 0
+    },
+    "featureAndRegressions": {
+      "passed": 111,
+      "failed": 0
+    },
+    "fullSuite": {
+      "passed": 285,
+      "failed": 46,
+      "baselinePassed": 213,
+      "baselineFailed": 46,
+      "newFailures": [],
+      "unchangedFailures": [
+        "AppComponent should render title",
+        "DishModalComponent should create",
+        "DishSelectCardComponent should create",
+        "GeneralInformationComponent aborts an unfinished FileReader when destroyed",
+        "GeneralInformationComponent accepts 50 characters and rejects 51 in firstName",
+        "GeneralInformationComponent accepts 50 characters and rejects 51 in lastName",
+        "GeneralInformationComponent accepts apostrophes and hyphens in names",
+        "GeneralInformationComponent accepts the exact size and dimension limits",
+        "GeneralInformationComponent blocks saving while a file is being read or validated",
+        "GeneralInformationComponent creates the component and loads the current user photo",
+        "GeneralInformationComponent does not mark a newer selection saved when an earlier upload finishes",
+        "GeneralInformationComponent does not reload the image for a same-user update",
+        "GeneralInformationComponent handles FileReader errors and preserves the displayed photo",
+        "GeneralInformationComponent handles a profile image fetch failure",
+        "GeneralInformationComponent ignores an old image fetch after a new photo was saved",
+        "GeneralInformationComponent marks empty names touched and blocks saving",
+        "GeneralInformationComponent prevents duplicate submissions while saving",
+        "GeneralInformationComponent rejects dimensions 200 × 4097",
+        "GeneralInformationComponent rejects dimensions 4097 × 200",
+        "GeneralInformationComponent rejects empty files before reading",
+        "GeneralInformationComponent rejects files larger than 5 MB before reading",
+        "GeneralInformationComponent rejects images that cannot be decoded",
+        "GeneralInformationComponent rejects the first name \"Alice Smith\"",
+        "GeneralInformationComponent rejects the first name \"Alice!\"",
+        "GeneralInformationComponent rejects the first name \"Alice1\"",
+        "GeneralInformationComponent rejects unsupported file type image/svg+xml before reading",
+        "GeneralInformationComponent rejects unsupported file type text/plain before reading",
+        "GeneralInformationComponent reports a partial save and retries only the failed photo",
+        "GeneralInformationComponent saves changed names with the correct arguments without uploading an unchanged photo",
+        "GeneralInformationComponent shows an error when saving names fails",
+        "GeneralInformationComponent tears down a pending image fetch and stops listening for user updates",
+        "GeneralInformationComponent tears down a pending name save when destroyed",
+        "GeneralInformationComponent tears down a pending photo upload when destroyed",
+        "GeneralInformationComponent treats a falsy profile response as a failure",
+        "GeneralInformationComponent uploads a selected photo without resaving unchanged names",
+        "MakeReservationComponent should create",
+        "MenuPageComponent should create",
+        "PlaceOrderWaiterComponent should create",
+        "RegisterComponent should create",
+        "ReportingDashboardComponent should create",
+        "ReservationConfirmedComponent should create",
+        "ReservationDashboardComponent should create",
+        "TimeSlotComponent should create",
+        "TimeSlotsModalComponent should create",
+        "WaiterDashboardComponent should create",
+        "WaiterPreOrderPageComponent should create"
+      ]
+    }
+  },
+  "checks": {
+    "specTypecheckExit": 0,
+    "appTypecheckExit": 0,
+    "productionBuildExit": 0
+  },
+  "productionInitialKb": 795.72,
+  "productionTransferKb": 170.42,
+  "browser": {
+    "demo": {
+      "legacyUrlRedirectsTo": "http://localhost:4200/reservations/demo-reservation/group-order",
+      "desktop": {
+        "cards": 4,
+        "scrollWidth": 787,
+        "width": 787
+      },
+      "mobile375Viewport": {
+        "cards": 4,
+        "scrollWidth": 360,
+        "width": 360
+      },
+      "grandTotal": 50.5,
+      "mainText": "Group Pre-Order\nCollecting pre-orders\nRustaveli Avenue 48\nOct 21, 2026\n19:00 – 20:30\n4 of 5 guests\nUpdated at 19:01:41\nRefresh\n\n 2 participants haven't submitted their cart yet — their dishes won't be included in the order\n\nMy Pre-Order\nSubmitted\nSpring Salad\n× 1\n$12.00\nAvocado Pine Nut Bowl\n× 1\n$14.50\n\nSubtotal\n$26.50\n\nGuest: Kateryna\nSubmitted\nRemove Guest\nSpring Salad\n× 2\n$24.00\n\nSubtotal\n$24.00\n\nGuest: Mariia\nStill choosing\nRemove Guest\nFresh Strawberry Mint Salad\n× 1\n$11.00\nRoasted Sweet Potato & Lentil Salad\n× 1\n$13.00\n\nSubtotal\n$24.00\n\nGuest: Mariana\nStill choosing\nRemove Guest\n\nNo dishes yet\n\nSubtotal\n$0.00\n\nConsolidated pre-order\nSpring Salad × 3\n$36.00\nAvocado Pine Nut Bowl × 1\n$14.50\n\nGrand Total\n$50.50\n\nSubmit Pre-Order"
+    },
+    "production": {
+      "requested": "http://localhost:4201/reservations/demo-reservation/group-order?demo",
+      "actualUrl": "http://localhost:4201/login",
+      "groupPageVisible": 0,
+      "signInVisible": true
+    },
+    "realAws": {
+      "reservationId": "hw6-20261030-47afd75e-reservation",
+      "before": {
+        "grandTotal": 540,
+        "participants": 4
+      },
+      "afterAutomaticGuestSync": {
+        "grandTotal": 760,
+        "participants": 4,
+        "manualRefreshUsed": false,
+        "mainText": "Group Pre-Order\nCollecting pre-orders\nHomework 6 temporary verification\nNov 1, 2026\n16:00 – 18:00\n4 of 4 guests\nUpdated at 18:43:03\nRefresh\n\n 1 participant hasn't submitted their cart yet — their dishes won't be included in the order\n\nMy Pre-Order\nSubmitted\nT\nTest Salad\n× 1\n$180.00\n\nSubtotal\n$180.00\n\nGuest: Remove Test\nStill choosing\nRemove Guest\nT\nTest Salad\n× 1\n$180.00\n\nSubtotal\n$180.00\n\nGuest: Andrii\nSubmitted\nRemove Guest\nT\nTest Salad\n× 2\n$360.00\n\nSubtotal\n$360.00\n\nGuest: Olena\nSubmitted\nRemove Guest\nT\nTest Soup\n× 1\n$220.00\n\nSubtotal\n$220.00\n\nConsolidated pre-order\nTest Salad × 3\n$540.00\nTest Soup × 1\n$220.00\n\nGrand Total\n$760.00\n\nSubmit Pre-Order"
+      },
+      "afterRemove": {
+        "participants": 3,
+        "mainText": "Group Pre-Order\nCollecting pre-orders\nHomework 6 temporary verification\nNov 1, 2026\n16:00 – 18:00\n3 of 4 guests\nUpdated at 18:43:39\nRefresh\nMy Pre-Order\nSubmitted\nT\nTest Salad\n× 1\n$180.00\n\nSubtotal\n$180.00\n\nGuest: Andrii\nSubmitted\nRemove Guest\nT\nTest Salad\n× 2\n$360.00\n\nSubtotal\n$360.00\n\nGuest: Olena\nSubmitted\nRemove Guest\nT\nTest Soup\n× 1\n$220.00\n\nSubtotal\n$220.00\n\nConsolidated pre-order\nTest Salad × 3\n$540.00\nTest Soup × 1\n$220.00\n\nGrand Total\n$760.00\n\nSubmit Pre-Order"
+      },
+      "afterSubmit": {
+        "status": "Submitted",
+        "mainText": "Group Pre-Order\nSent to Restaurant\nHomework 6 temporary verification\nNov 1, 2026\n16:00 – 18:00\n3 of 4 guests\nUpdated at 18:43:39\nMy Pre-Order\nSubmitted\nT\nTest Salad\n× 1\n$180.00\n\nSubtotal\n$180.00\n\nGuest: Andrii\nSubmitted\nT\nTest Salad\n× 2\n$360.00\n\nSubtotal\n$360.00\n\nGuest: Olena\nSubmitted\nT\nTest Soup\n× 1\n$220.00\n\nSubtotal\n$220.00\n\nConsolidated pre-order\nTest Salad × 3\n$540.00\nTest Soup × 1\n$220.00\n\nGrand Total\n$760.00\n\nYour pre-order has been sent to the restaurant.",
+        "submitButtons": 0,
+        "removeButtons": 0
+      },
+      "afterReopen": {
+        "status": "Submitted",
+        "mainText": "Group Pre-Order\nSent to Restaurant\nHomework 6 temporary verification\nNov 1, 2026\n16:00 – 18:00\n3 of 4 guests\nUpdated at 18:43:55\nMy Pre-Order\nSubmitted\nT\nTest Salad\n× 1\n$180.00\n\nSubtotal\n$180.00\n\nGuest: Andrii\nSubmitted\nT\nTest Salad\n× 2\n$360.00\n\nSubtotal\n$360.00\n\nGuest: Olena\nSubmitted\nT\nTest Soup\n× 1\n$220.00\n\nSubtotal\n$220.00\n\nConsolidated pre-order\nTest Salad × 3\n$540.00\nTest Soup × 1\n$220.00\n\nGrand Total\n$760.00\n\nYour pre-order has been sent to the restaurant.",
+        "cards": 3
+      },
+      "empty": {
+        "mainText": "Group Pre-Order\nCollecting pre-orders\nHomework 6 temporary verification\nNov 1, 2026\n16:00 – 18:00\n1 of 4 guests\nUpdated at 18:45:18\nRefresh\n\n 1 participant hasn't submitted their cart yet — their dishes won't be included in the order\n\nParticipants haven't added any dishes yet\n\nMy Pre-Order\nStill choosing\n\nNo dishes yet\n\nSubtotal\n$0.00\n\nConsolidated pre-order\nNo submitted dishes yet\n\nGrand Total\n$0.00\n\nSubmit Pre-Order",
+        "submitDisabled": true
+      },
+      "missing": {
+        "message": "Group Pre-Order\n\nGroup reservation not found\n\nTry again"
+      }
+    }
+  },
+  "liveFixtureApiChecks": 16,
+  "cleanup": {
+    "rowsVerifiedAbsent": 15,
+    "usersVerifiedAbsent": 1,
+    "errors": [],
+    "passed": true
+  },
+  "review": {
+    "reviewer": "fresh-context gpt-6-astra",
+    "critical": 0,
+    "importantFound": 1,
+    "importantFixed": 1,
+    "minorConfirmed": 0,
+    "fix": "Compare Submit dishId/quantity response with displayed order; reconcile once if changed; keep Submitted locked, hide obsolete final total, allow silent Refresh retry.",
+    "redEvidence": "submit-reconciliation-red.log: 3 failures before fix",
+    "greenEvidence": "feature-regressions.log: 111 success after fix"
+  },
+  "officialTestsUnmodified": [
+    {
+      "level": "practice",
+      "path": "frontend/restaurant-frontend-app/src/app/components/group-orders/participant-card/participant-card.component.spec.ts",
+      "sha256": "9b2d0bae180e05e9f0824ca5e540882e041871e146266fc91781a9c7a503a8c5"
+    },
+    {
+      "level": "level-2",
+      "path": "frontend/restaurant-frontend-app/src/app/pages/group-order-page/group-order-page.component.spec.ts",
+      "sha256": "e716064ba334d27c9ffea7fc4f225f6ace299b2845c89489954b4ec0327154ce"
+    },
+    {
+      "level": "level-2",
+      "path": "frontend/restaurant-frontend-app/src/app/services/group-orders/group-orders.service.spec.ts",
+      "sha256": "3fa7f3f681c9e1f093e656c595b91aa9b2a1157db02eb0073b80424a1a589a21"
+    },
+    {
+      "level": "level-3",
+      "path": "frontend/restaurant-frontend-app/src/app/pages/group-order-page/group-order-page.component.sync.spec.ts",
+      "sha256": "5a085e31916bb28363b83031d99e519737f7aa9e637b453291430c5e96808da5"
+    },
+    {
+      "level": "level-3",
+      "path": "frontend/restaurant-frontend-app/src/app/services/group-orders/group-orders.service.sync.spec.ts",
+      "sha256": "eedcf4d21e8ec0bfd1ce35aead0a17b6e1c7780ce0084c548af10019529db787"
+    },
+    {
+      "level": "level-3-bonus",
+      "path": "frontend/restaurant-frontend-app/src/app/pages/group-order-page/group-order-page.component.remove.spec.ts",
+      "sha256": "90ec2c71fbc3cd78c01954ffc36d361ccb9c025ba5115111e7a9048fab4a7ce3"
+    },
+    {
+      "level": "level-3-bonus",
+      "path": "frontend/restaurant-frontend-app/src/app/services/group-orders/group-orders.service.remove.spec.ts",
+      "sha256": "6244dc471ec4d48d853e8beb110aa7aa80e29fb2e96cdf822a481257fa7aff52"
+    }
+  ],
+  "sourceArchive": {
+    "file": "green-and-tasty.zip",
+    "sha256": "1c07b47a7e3c9420ff77e8031a338c14afa712ed19d5c2c217f2114165c5c192"
+  },
+  "publication": {
+    "stateAtVerification": "local before publication",
+    "targetBranch": "feature/frontend-homework-6",
+    "awsFrontendPublished": false,
+    "reason": "CloudFront access denied by AWS."
+  },
+  "limitations": [
+    "Full frontend suite retains 46 pre-existing failures, enumerated above.",
+    "No public AWS frontend URL. Existing shared modal focus and snapshot-only route reuse behavior were left unchanged."
+  ]
+}
