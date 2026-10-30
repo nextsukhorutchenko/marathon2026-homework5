@@ -1,0 +1,155 @@
+:host {
+  display: block;
+  background: #f7f8f7;
+  min-height: 70vh;
+}
+.group-order {
+  max-width: 960px;
+  margin: auto;
+  padding: 32px 24px 64px;
+  color: #26352c;
+}
+.back-link {
+  color: #28723d;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.page-heading,
+.participant-heading,
+.dish-list li,
+.participant-total,
+.summary > p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+.page-heading h1 {
+  margin: 0;
+  font-size: 32px;
+}
+.eyebrow {
+  color: #5c6b61;
+  margin: 0 0 4px;
+}
+.participants {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+}
+.participant,
+.summary,
+.confirmation {
+  border: 1px solid #d6dfd7;
+  border-radius: 12px;
+  background: white;
+  padding: 24px;
+}
+h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+.owner-badge,
+.status {
+  font-size: 13px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: #f1ede4;
+}
+.owner-badge,
+.status--ready {
+  background: #e4f2e7;
+  color: #235d32;
+}
+.dish-list {
+  list-style: none;
+  padding: 0;
+}
+.dish-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #edf0ed;
+}
+.participant-total {
+  margin-bottom: 0;
+}
+.remove-participant {
+  border: 1px solid #b95a50;
+  color: #8c2e24;
+  background: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.notice {
+  padding: 16px;
+  border-radius: 8px;
+  background: #eaf0eb;
+}
+.notice--error {
+  background: #fcebe8;
+  color: #852b20;
+}
+.notice--success {
+  background: #e4f2e7;
+  color: #235d32;
+}
+.summary {
+  margin-top: 24px;
+}
+.summary-hint,
+.empty-cart {
+  color: #58675c;
+}
+.summary .summary-hint {
+  display: block;
+}
+.confirmation {
+  margin-top: 24px;
+  border: 2px solid #42844f;
+}
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.button {
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.button--secondary {
+  border: 1px solid #42844f;
+  background: white;
+  color: #235d32;
+}
+.button--primary {
+  border: 1px solid #28723d;
+  background: #28723d;
+  color: white;
+}
+@media (max-width: 600px) {
+  .group-order {
+    padding: 24px 16px;
+  }
+  .page-heading {
+    align-items: flex-start;
+  }
+  .page-heading h1 {
+    font-size: 26px;
+  }
+  .participant,
+  .summary,
+  .confirmation {
+    padding: 16px;
+  }
+  .dish-list li {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}

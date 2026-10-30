@@ -1,0 +1,24 @@
+# Historical fixture IDs: all test data has been removed.
+# Use a valid Owner ID token and newly created fixture IDs to repeat manually.
+@ownerIdToken = REPLACE_WITH_OWNER_ID_TOKEN
+
+### Рівень 1: учасники, страви й суми
+GET https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions
+Authorization: Bearer {{ownerIdToken}}
+
+### Рівень 2: owner-сесія
+GET https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id
+Authorization: Bearer {{ownerIdToken}}
+
+### Рівень 3: видалення гостя
+DELETE https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4
+Authorization: Bearer {{ownerIdToken}}
+
+### Рівень 2: підтвердження консолідованого pre-order
+POST https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit
+Authorization: Bearer {{ownerIdToken}}
+Content-Type: application/json
+
+{
+  "reservationId": "hw5-20261028-a84c3885-reservation"
+}

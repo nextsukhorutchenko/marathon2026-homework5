@@ -1,0 +1,180 @@
+<main class="group-order" [attr.aria-busy]="loading() || busy()">
+  <a routerLink="/reservations" class="back-link">← Back to reservations</a>
+  <header class="page-heading">
+    <div>
+      <p class="eyebrow">Your reservation</p>
+      <h1>Group pre-order</h1>
+    </div>
+    <button
+      type="button"
+      class="button button--secondary"
+      [disabled]="loading() || busy()"
+      (click)="loadGroup()"
+    >
+      Refresh
+    </button>
+  </header>
+  <p>
+    Review your participants’ dishes, remove a participant, or send the submitted carts to the
+    restaurant.
+  </p>
+
+  @if (error()) {
+    <p class="notice notice--error" role="alert">{{ error() }}</p>
+  }
+  @if (canPrepare()) {
+    <button
+      type="button"
+      class="button button--primary"
+      [disabled]="busy() || loading()"
+      (click)="prepareGroup()"
+    >
+      Prepare group pre-order
+    </button>
+  }
+  @if (loading()) {
+    <p class="notice" role="status">Loading group pre-order…</p>
+  }
+  @if (!loading() && snapshot(); as group) {
+    @if (ownerSession()?.status === 'Submitted') {
+      <p class="notice notice--success" role="status">
+        Group pre-order submitted. Participant carts are now locked.
+      </p>
+    } @else if (ownerSession()?.status === 'Closed') {
+      <p class="notice" role="status">This group reservation is closed.</p>
+    }
+    <section aria-label="Participants" class="participants">
+      @for (participant of group.participants; track participant.id) {
+        <article class="participant">
+          <header class="participant-heading">
+            <div>
+              <h2>
+                {{ participant.name }}
+                @if (participant.type === 'Owner') {
+                  <span class="owner-badge">Owner</span>
+                }
+              </h2>
+              <span
+                [class]="
+                  participant.isSubmitted || participant.type === 'Owner'
+                    ? 'status status--ready'
+                    : 'status'
+                "
+                >{{
+                  participant.type === 'Owner'
+                    ? 'Included on confirmation'
+                    : participant.isSubmitted
+                      ? 'Submitted'
+                      : 'Draft'
+                }}</span
+              >
+            </div>
+            @if (editable() && participant.type === 'Guest') {
+              <button
+                type="button"
+                class="remove-participant"
+                [attr.aria-label]="'Remove ' + participant.name"
+                [disabled]="busy()"
+                (click)="pendingRemoval.set(participant); confirmSubmit.set(false)"
+              >
+                Remove
+              </button>
+            }
+          </header>
+          @if (participant.items.length > 0) {
+            <ul class="dish-list">
+              @for (item of participant.items; track item.dish.id) {
+                <li>
+                  <span>{{ item.dish.name }} × {{ item.quantity }}</span
+                  ><span>{{ item.dish.price | number: '1.2-2' }} each</span>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="empty-cart">No dishes added.</p>
+          }
+          <p class="participant-total">
+            Participant total <strong>{{ participant.total | number: '1.2-2' }}</strong>
+          </p>
+        </article>
+      } @empty {
+        <p class="notice">No participants yet. Share your reservation invite to get started.</p>
+      }
+    </section>
+    <section class="summary" aria-label="Group totals">
+      <p>
+        <span>All participant carts</span><strong>{{ group.total | number: '1.2-2' }}</strong>
+      </p>
+      <p>
+        <span>Your pre-order + submitted guest carts</span
+        ><strong>{{ submittedTotal() | number: '1.2-2' }}</strong>
+      </p>
+      <p class="summary-hint">
+        {{ submittedCount() }} submitted guest carts · {{ draftCount() }} draft guest carts. Guest
+        drafts will not be sent.
+      </p>
+      @if (editable()) {
+        <button
+          type="button"
+          class="button button--primary"
+          [disabled]="busy() || !hasSubmittedDishes()"
+          (click)="confirmSubmit.set(true); pendingRemoval.set(null)"
+        >
+          Submit group pre-order
+        </button>
+      }
+    </section>
+  }
+
+  @if (pendingRemoval(); as participant) {
+    <section class="confirmation" role="region" aria-label="Confirm participant removal">
+      <h2>Remove {{ participant.name }}?</h2>
+      <p>Their cart will be removed from this group.</p>
+      <div class="confirmation-actions">
+        <button
+          type="button"
+          class="button button--secondary"
+          [disabled]="busy()"
+          (click)="pendingRemoval.set(null)"
+        >
+          Keep participant
+        </button>
+        <button
+          type="button"
+          class="button button--primary"
+          [disabled]="busy()"
+          (click)="removeParticipant()"
+        >
+          Confirm removal
+        </button>
+      </div>
+    </section>
+  }
+  @if (confirmSubmit()) {
+    <section class="confirmation" role="region" aria-label="Confirm group submission">
+      <h2>Send this group pre-order?</h2>
+      <p>
+        Your personal pre-order and submitted guest carts will be included. Guest drafts will be
+        left out. You cannot change the group after submission.
+      </p>
+      <div class="confirmation-actions">
+        <button
+          type="button"
+          class="button button--secondary"
+          [disabled]="busy()"
+          (click)="confirmSubmit.set(false)"
+        >
+          Go back
+        </button>
+        <button
+          type="button"
+          class="button button--primary"
+          [disabled]="busy()"
+          (click)="submitGroup()"
+        >
+          Confirm submission
+        </button>
+      </div>
+    </section>
+  }
+</main>

@@ -1,0 +1,10 @@
+{
+  "runDate": "2026-10-28",
+  "results": {
+    "total": 184,
+    "passed": 184,
+    "failed": 0,
+    "notExecuted": 0
+  },
+  "command": "dotnet test backend/restaurant-backend-app/Tests/APIHandler.Tests.csproj"
+}

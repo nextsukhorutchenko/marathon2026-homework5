@@ -1,0 +1,3117 @@
+{
+  "startedAtUtc": "2026-10-28T04:53:36.616006+00:00",
+  "baseUrl": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop",
+  "fixturePrefix": "hw5-20261028-a84c3885",
+  "fixtureMethod": "Synthetic location/table/dishes/reservations and edge-case sessions seeded in real DynamoDB. Main guest carts, Owner preparation, lookup, deletion and submission exercised through public HTTP API. Real Cognito users. No mocked services.",
+  "checks": [
+    {
+      "name": "Register temporary owner",
+      "method": "POST",
+      "path": "/register",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/register",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "firstName": "Homework",
+        "lastName": "Check",
+        "email": "hw5-20261028-a84c3885-owner@example.com",
+        "password": "[REDACTED]",
+        "confirmPassword": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:47 GMT",
+        "x-amzn-RequestId": "02647e7f-56d9-4352-b7a0-decdab2c3b6d",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DpPEI1PHcEHog=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "User registered and confirmed successfully"
+      },
+      "passed": true
+    },
+    {
+      "name": "Sign in owner",
+      "method": "POST",
+      "path": "/signin",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/signin",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "email": "hw5-20261028-a84c3885-owner@example.com",
+        "password": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:49 GMT",
+        "x-amzn-RequestId": "4cd7a4e0-7ff9-4382-8ca0-90d72a81bdc6",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DqiFo3vHcEPJA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Sign in successful",
+        "idToken": "[REDACTED]",
+        "accessToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    {
+      "name": "Register temporary other",
+      "method": "POST",
+      "path": "/register",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/register",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "firstName": "Homework",
+        "lastName": "Check",
+        "email": "hw5-20261028-a84c3885-other@example.com",
+        "password": "[REDACTED]",
+        "confirmPassword": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:50 GMT",
+        "x-amzn-RequestId": "98b0c008-8d70-40d4-beb9-6f278dcc6d6f",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DquGj1vHcENcQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "User registered and confirmed successfully"
+      },
+      "passed": true
+    },
+    {
+      "name": "Sign in other",
+      "method": "POST",
+      "path": "/signin",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/signin",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "email": "hw5-20261028-a84c3885-other@example.com",
+        "password": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:51 GMT",
+        "x-amzn-RequestId": "4829026f-58c5-4fdf-83af-882736d6800b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dq_Gj2PHcEvEg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Sign in successful",
+        "idToken": "[REDACTED]",
+        "accessToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    {
+      "name": "Unauthenticated GET /guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175"
+      },
+      "requestBody": null,
+      "status": 401,
+      "expectedStatus": 401,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:11 GMT",
+        "x-amz-apigw-id": "F8DuKHDYvHcEs8w=",
+        "x-amzn-RequestId": "2c0a42fe-f49a-47cc-aed1-3fe94b78ba7a"
+      },
+      "responseBody": {
+        "message": "Unauthorized"
+      },
+      "passed": true
+    },
+    {
+      "name": "Non-owner forbidden GET /guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 403,
+      "expectedStatus": 403,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:14 GMT",
+        "x-amzn-RequestId": "f8fc77db-713a-4569-a8b6-bb6d23975569",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DuQGnzvHcEsYw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Only the reservation owner can perform this action."
+      },
+      "passed": true
+    },
+    {
+      "name": "Unauthenticated GET /reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175"
+      },
+      "requestBody": null,
+      "status": 401,
+      "expectedStatus": 401,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:15 GMT",
+        "x-amz-apigw-id": "F8DuvE2HPHcEiMw=",
+        "x-amzn-RequestId": "a31245a8-9f0a-46b5-990e-691da1ff222e"
+      },
+      "responseBody": {
+        "message": "Unauthorized"
+      },
+      "passed": true
+    },
+    {
+      "name": "Non-owner forbidden GET /reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 403,
+      "expectedStatus": 403,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:16 GMT",
+        "x-amzn-RequestId": "bd2fe495-7817-4361-8a55-12f4fda9482e",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Du1GYfPHcEAzA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Only the reservation owner can perform this action."
+      },
+      "passed": true
+    },
+    {
+      "name": "Unauthenticated POST /group-reservations/hw5-20261028-a84c3885-group/submit",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 401,
+      "expectedStatus": 401,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:16 GMT",
+        "x-amz-apigw-id": "F8Du5FP1PHcEGlA=",
+        "x-amzn-RequestId": "777100a6-0d22-43f6-936b-687e10d1604a"
+      },
+      "responseBody": {
+        "message": "Unauthorized"
+      },
+      "passed": true
+    },
+    {
+      "name": "Non-owner forbidden POST /group-reservations/hw5-20261028-a84c3885-group/submit",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 403,
+      "expectedStatus": 403,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:17 GMT",
+        "x-amzn-RequestId": "1d8dcf38-6331-49f4-bb0b-75e4afbc9d73",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Du_EVrvHcEDvg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Only the reservation owner can perform this action."
+      },
+      "passed": true
+    },
+    {
+      "name": "Unauthenticated DELETE /guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175"
+      },
+      "requestBody": null,
+      "status": 401,
+      "expectedStatus": 401,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:18 GMT",
+        "x-amz-apigw-id": "F8DvJGDQPHcEFXw=",
+        "x-amzn-RequestId": "ca70e5d3-fca7-4f1a-bb68-e7e010909942"
+      },
+      "responseBody": {
+        "message": "Unauthorized"
+      },
+      "passed": true
+    },
+    {
+      "name": "Non-owner forbidden DELETE /guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 403,
+      "expectedStatus": 403,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:19 GMT",
+        "x-amzn-RequestId": "8b1707c4-b392-46ea-b8a5-ad34fb54e59b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DvOFZ3PHcEegg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Only the reservation owner can perform this action."
+      },
+      "passed": true
+    },
+    {
+      "name": "GET missing group",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-missing-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-missing-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:19 GMT",
+        "x-amzn-RequestId": "7bc0abc0-ca54-49d2-a723-7f5fd8d4b38b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DvbHFqPHcErfg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Group reservation was not found"
+      },
+      "passed": true
+    },
+    {
+      "name": "GET missing reservation",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-missing-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-missing-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:20 GMT",
+        "x-amzn-RequestId": "3a2b816e-49c0-42f2-927e-2a6f4fca6442",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DviGb2PHcEeEw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Reservation not found."
+      },
+      "passed": true
+    },
+    {
+      "name": "GET reservation without group",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-no-group-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-no-group-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:21 GMT",
+        "x-amzn-RequestId": "d1d8dffd-6e11-46e5-aa2b-85e4e2c85cf8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DvoGVdPHcEtxg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Group reservation was not found"
+      },
+      "passed": true
+    },
+    {
+      "name": "POST missing group",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-missing-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-missing-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:21 GMT",
+        "x-amzn-RequestId": "7d7d60cf-dd68-423e-80e4-113deb49d3ea",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DvvFafPHcEizA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Group reservation was not found"
+      },
+      "passed": true
+    },
+    {
+      "name": "POST group with missing reservation",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-orphan-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-orphan-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-missing-reservation"
+      },
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:22 GMT",
+        "x-amzn-RequestId": "26f473a5-0063-45c2-a899-fbf1aff00da4",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dv1GjZvHcEtRg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Reservation not found."
+      },
+      "passed": true
+    },
+    {
+      "name": "POST no submitted sessions",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:23 GMT",
+        "x-amzn-RequestId": "f300e7dc-3909-4612-ab00-80de01e14dc7",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dv8F_HPHcEKjw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "There are no submitted sessions.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "POST submitted session without dishes",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:26 GMT",
+        "x-amzn-RequestId": "4d1ffea1-12f0-4391-89c1-f15986c6b16b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DwbHVWvHcEhow=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Submitted sessions contain no dishes.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "POST submitted dishes without order",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:29 GMT",
+        "x-amzn-RequestId": "c6b88555-54f6-410d-9132-12d436c7096b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dw1ExWvHcEkEg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Order not found. Prepare the group pre-order first.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "DELETE guest from different group",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-edge-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-edge-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:30 GMT",
+        "x-amzn-RequestId": "e3b80098-7c95-40be-9b36-84ac6296ad03",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxDGppvHcEt7g=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Guest session does not belong to this group reservation.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "DELETE missing guest",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:31 GMT",
+        "x-amzn-RequestId": "291a8de6-eb03-465b-8db5-963788c5206e",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxKG0pPHcEJjw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Guest session not found."
+      },
+      "passed": true
+    },
+    {
+      "name": "POST mismatched reservation",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:31 GMT",
+        "x-amzn-RequestId": "fd18ca0b-ee24-4ab2-b9c0-5066140ec3bd",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxRFKtvHcEgyQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Reservation does not belong to this group.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "POST missing reservationId body",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {},
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:32 GMT",
+        "x-amzn-RequestId": "6dbaac93-dab7-431e-8f39-ad804f326699",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxUHdBvHcEOAw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Reservation ID is required."
+      },
+      "passed": true
+    },
+    {
+      "name": "GET legacy Owner session absent",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:33 GMT",
+        "x-amzn-RequestId": "7a4311c2-31e8-49fd-a038-9087d1763f2a",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxbH3dPHcEtCA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Owner session not found. Prepare the group pre-order to create it."
+      },
+      "passed": true
+    },
+    {
+      "name": "Prepare legacy Owner and Order",
+      "method": "POST",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/group-pre-order",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/group-pre-order",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {},
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:34 GMT",
+        "x-amzn-RequestId": "1edeef81-012b-4982-8505-656b305953c5",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxlHEgPHcEFXw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "guestSessionId": "owner-hw5-20261028-a84c3885-group",
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "status": "Open"
+      },
+      "passed": true
+    },
+    {
+      "name": "Level 2 GET Owner session",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:35 GMT",
+        "x-amzn-RequestId": "f5a21888-cf98-497d-96a0-589473665a39",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dx0EzfPHcEuBQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "guestSessionId": "owner-hw5-20261028-a84c3885-group",
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "status": "Open"
+      },
+      "passed": true
+    },
+    {
+      "name": "DELETE Owner session prohibited",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/owner-hw5-20261028-a84c3885-group",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/owner-hw5-20261028-a84c3885-group",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:36 GMT",
+        "x-amzn-RequestId": "73bc04db-b741-408e-806d-4884ca7c1572",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dx9HRavHcEZIg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "The owner session cannot be removed.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    {
+      "name": "Owner personal cart before group submission",
+      "method": "PUT",
+      "path": "/orders/hw5-20261028-a84c3885-reservation",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/orders/hw5-20261028-a84c3885-reservation",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "orderItems": [
+          {
+            "dishId": "hw5-20261028-a84c3885-salad",
+            "quantity": 1,
+            "state": 0
+          }
+        ]
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:38 GMT",
+        "x-amzn-RequestId": "924fd525-ecd2-486b-aae2-3cf81e3dfdb8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyDEKbvHcEr9g=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": "Pre-order updated successfully.",
+      "passed": true
+    },
+    {
+      "name": "Join submitted guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Andrii"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:39 GMT",
+        "x-amzn-RequestId": "9902a6e5-77f9-4992-b7d9-cc58457bf718",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyWHWQvHcEMQQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest menu submitted",
+      "method": "GET",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:41 GMT",
+        "x-amzn-RequestId": "e1515f57-19b7-46b5-98b4-cb8568700574",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyiHgSvHcEWoQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest adds dish submitted",
+      "method": "POST",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-salad",
+        "quantity": 2
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:42 GMT",
+        "x-amzn-RequestId": "faf61734-1035-468e-9933-a651f35ee990",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dy1El8vHcEfVw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest confirms own cart",
+      "method": "POST",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {},
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:43 GMT",
+        "x-amzn-RequestId": "e0ca7513-e1c4-4bab-b6a6-afed6cedc442",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzCGjnPHcEejw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Cart submitted successfully."
+      },
+      "passed": true
+    },
+    {
+      "name": "Join draft guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Olena"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:44 GMT",
+        "x-amzn-RequestId": "6937d5cb-8a78-4cf3-ac0e-6e23c04d926f",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzOGyRvHcEizA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest menu draft",
+      "method": "GET",
+      "path": "/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:44 GMT",
+        "x-amzn-RequestId": "1f771a5e-c6ad-4e5e-86ef-5bdb92ca8889",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzRHQDvHcEgYw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest adds dish draft",
+      "method": "POST",
+      "path": "/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-soup",
+        "quantity": 1
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:46 GMT",
+        "x-amzn-RequestId": "05619001-848f-4fdc-9f47-badb25684c71",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzcEMzvHcET1Q=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    {
+      "name": "Join remove guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Remove Test"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:46 GMT",
+        "x-amzn-RequestId": "7e95d6fe-c736-468e-af34-4d36b6124400",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzmE3TPHcEVTA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest menu remove",
+      "method": "GET",
+      "path": "/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:47 GMT",
+        "x-amzn-RequestId": "2f57ce64-e78e-4dd5-a8e0-c5d0baf15280",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzuEVsvHcEVdA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "name": "Guest adds dish remove",
+      "method": "POST",
+      "path": "/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-salad",
+        "quantity": 1
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:48 GMT",
+        "x-amzn-RequestId": "f00775ab-3f99-4db7-a492-67f1a2a6630c",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dz5G0UvHcEQSg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    {
+      "name": "Level 1 GET participant snapshot",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:50 GMT",
+        "x-amzn-RequestId": "d2be2278-92cf-4edd-a77f-46bd4fd2d625",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0BGl6vHcEogg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          },
+          {
+            "id": "d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+            "type": "Guest",
+            "name": "Remove Test",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          }
+        ],
+        "total": 940
+      },
+      "passed": true
+    },
+    {
+      "name": "Level 3 DELETE guest returns updated snapshot",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:51 GMT",
+        "x-amzn-RequestId": "7e26a13b-36f0-4cb1-a78e-35579a968d29",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0RG0YPHcEdIA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          }
+        ],
+        "total": 760
+      },
+      "passed": true
+    },
+    {
+      "name": "Level 2 POST consolidated order",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:54 GMT",
+        "x-amzn-RequestId": "29dd7634-08fa-4a84-9734-5a354a50bc6e",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0uGRavHcEJxQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": [
+        {
+          "dishId": "hw5-20261028-a84c3885-salad",
+          "quantity": 3
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "GET snapshot after submission",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:59 GMT",
+        "x-amzn-RequestId": "8f14815c-107d-42f1-8c71-8246e6419cc5",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D1hFmDPHcEEvg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          }
+        ],
+        "total": 760
+      },
+      "passed": true
+    },
+    {
+      "name": "POST repeat submission conflict",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 409,
+      "expectedStatus": 409,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:59 GMT",
+        "x-amzn-RequestId": "b5fe0650-caeb-4f53-952a-39d022f152ce",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D1pGEtPHcESTQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "This group reservation is no longer open for changes."
+      },
+      "passed": true
+    },
+    {
+      "name": "DELETE after submission conflict",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 409,
+      "expectedStatus": 409,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:55:00 GMT",
+        "x-amzn-RequestId": "2865feaa-c31f-467a-a90f-891a7e6b1b21",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D1vFiAPHcEhow=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "This group reservation is no longer open for changes."
+      },
+      "passed": true
+    },
+    {
+      "name": "CORS GET /guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "method": "OPTIONS",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Access-Control-Request-Method": "GET",
+        "Access-Control-Request-Headers": "authorization,content-type"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:55:00 GMT",
+        "Access-Control-Allow-Methods": "*",
+        "x-amzn-RequestId": "f0aac727-bdd8-4e6d-acb0-ad3fc5c4f3a5",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "x-amz-apigw-id": "F8D11GvqPHcEvAg="
+      },
+      "responseBody": "",
+      "passed": true
+    },
+    {
+      "name": "CORS GET /reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "method": "OPTIONS",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Access-Control-Request-Method": "GET",
+        "Access-Control-Request-Headers": "authorization,content-type"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:55:01 GMT",
+        "Access-Control-Allow-Methods": "*",
+        "x-amzn-RequestId": "aba78169-a0bc-4810-ad37-7c4efeb38afe",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "x-amz-apigw-id": "F8D17EGFPHcEL0g="
+      },
+      "responseBody": "",
+      "passed": true
+    },
+    {
+      "name": "CORS POST /group-reservations/hw5-20261028-a84c3885-group/submit",
+      "method": "OPTIONS",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "authorization,content-type"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:55:02 GMT",
+        "Access-Control-Allow-Methods": "*",
+        "x-amzn-RequestId": "c200169d-555e-4cbc-831c-dc9aac30eae6",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "x-amz-apigw-id": "F8D2BHgoPHcEdIA="
+      },
+      "responseBody": "",
+      "passed": true
+    },
+    {
+      "name": "CORS DELETE /guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "method": "OPTIONS",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Access-Control-Request-Method": "DELETE",
+        "Access-Control-Request-Headers": "authorization,content-type"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:55:02 GMT",
+        "Access-Control-Allow-Methods": "*",
+        "x-amzn-RequestId": "3c18c8ef-cd66-47ba-bf5d-2e7d360efb54",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+        "x-amz-apigw-id": "F8D2EFBhPHcEGvw="
+      },
+      "responseBody": "",
+      "passed": true
+    }
+  ],
+  "assertions": [
+    {
+      "name": "AWS account matches intended server",
+      "passed": true
+    },
+    {
+      "name": "Owner session belongs to intended group",
+      "passed": true
+    },
+    {
+      "name": "Level 1 per-participant totals and submission flags",
+      "passed": true
+    },
+    {
+      "name": "Level 3 updated participants and total",
+      "passed": true
+    },
+    {
+      "name": "Level 3 deleted session absent from DynamoDB",
+      "passed": true
+    },
+    {
+      "name": "Only submitted guest dishes plus Owner; merge by dishId",
+      "passed": true,
+      "observed": [
+        {
+          "dishId": "hw5-20261028-a84c3885-salad",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "name": "Both persisted statuses changed",
+      "passed": true,
+      "observed": {
+        "orderStatus": 3,
+        "orderStatusName": "SubmittedByCustomer",
+        "groupStatus": 1,
+        "groupStatusName": "Submitted"
+      }
+    },
+    {
+      "name": "DynamoDB consolidated quantity and draft exclusion",
+      "passed": true
+    },
+    {
+      "name": "Refresh keeps snapshot total without double counting",
+      "passed": true
+    },
+    {
+      "name": "CORS allows GET",
+      "passed": true
+    },
+    {
+      "name": "CORS allows GET",
+      "passed": true
+    },
+    {
+      "name": "CORS allows POST",
+      "passed": true
+    },
+    {
+      "name": "CORS allows DELETE",
+      "passed": true
+    }
+  ],
+  "examples": {
+    "setup-register-owner": {
+      "name": "Register temporary owner",
+      "method": "POST",
+      "path": "/register",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/register",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "firstName": "Homework",
+        "lastName": "Check",
+        "email": "hw5-20261028-a84c3885-owner@example.com",
+        "password": "[REDACTED]",
+        "confirmPassword": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:47 GMT",
+        "x-amzn-RequestId": "02647e7f-56d9-4352-b7a0-decdab2c3b6d",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DpPEI1PHcEHog=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "User registered and confirmed successfully"
+      },
+      "passed": true
+    },
+    "setup-signin-owner": {
+      "name": "Sign in owner",
+      "method": "POST",
+      "path": "/signin",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/signin",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "email": "hw5-20261028-a84c3885-owner@example.com",
+        "password": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:49 GMT",
+        "x-amzn-RequestId": "4cd7a4e0-7ff9-4382-8ca0-90d72a81bdc6",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DqiFo3vHcEPJA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Sign in successful",
+        "idToken": "[REDACTED]",
+        "accessToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    "setup-register-other": {
+      "name": "Register temporary other",
+      "method": "POST",
+      "path": "/register",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/register",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "firstName": "Homework",
+        "lastName": "Check",
+        "email": "hw5-20261028-a84c3885-other@example.com",
+        "password": "[REDACTED]",
+        "confirmPassword": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:50 GMT",
+        "x-amzn-RequestId": "98b0c008-8d70-40d4-beb9-6f278dcc6d6f",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DquGj1vHcENcQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "User registered and confirmed successfully"
+      },
+      "passed": true
+    },
+    "setup-signin-other": {
+      "name": "Sign in other",
+      "method": "POST",
+      "path": "/signin",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/signin",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "email": "hw5-20261028-a84c3885-other@example.com",
+        "password": "[REDACTED]"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:53:51 GMT",
+        "x-amzn-RequestId": "4829026f-58c5-4fdf-83af-882736d6800b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dq_Gj2PHcEvEg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Sign in successful",
+        "idToken": "[REDACTED]",
+        "accessToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    "error-get-missing-group": {
+      "name": "GET missing group",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-missing-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-missing-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:19 GMT",
+        "x-amzn-RequestId": "7bc0abc0-ca54-49d2-a723-7f5fd8d4b38b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DvbHFqPHcErfg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Group reservation was not found"
+      },
+      "passed": true
+    },
+    "error-no-submitted-sessions": {
+      "name": "POST no submitted sessions",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:23 GMT",
+        "x-amzn-RequestId": "f300e7dc-3909-4612-ab00-80de01e14dc7",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dv8F_HPHcEKjw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "There are no submitted sessions.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    "error-empty-submitted-cart": {
+      "name": "POST submitted session without dishes",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:26 GMT",
+        "x-amzn-RequestId": "4d1ffea1-12f0-4391-89c1-f15986c6b16b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DwbHVWvHcEhow=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Submitted sessions contain no dishes.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    "error-order-missing": {
+      "name": "POST submitted dishes without order",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-edge-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-edge-reservation"
+      },
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:29 GMT",
+        "x-amzn-RequestId": "c6b88555-54f6-410d-9132-12d436c7096b",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dw1ExWvHcEkEg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Order not found. Prepare the group pre-order first.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    "error-delete-wrong-group": {
+      "name": "DELETE guest from different group",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-edge-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-edge-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 400,
+      "expectedStatus": 400,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:30 GMT",
+        "x-amzn-RequestId": "e3b80098-7c95-40be-9b36-84ac6296ad03",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxDGppvHcEt7g=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Guest session does not belong to this group reservation.",
+        "errorCode": "Unknown"
+      },
+      "passed": true
+    },
+    "error-delete-missing-guest": {
+      "name": "DELETE missing guest",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/hw5-20261028-a84c3885-missing-guest",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 404,
+      "expectedStatus": 404,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:31 GMT",
+        "x-amzn-RequestId": "291a8de6-eb03-465b-8db5-963788c5206e",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxKG0pPHcEJjw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "Guest session not found."
+      },
+      "passed": true
+    },
+    "setup-prepare": {
+      "name": "Prepare legacy Owner and Order",
+      "method": "POST",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/group-pre-order",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/group-pre-order",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {},
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:34 GMT",
+        "x-amzn-RequestId": "1edeef81-012b-4982-8505-656b305953c5",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DxlHEgPHcEFXw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "guestSessionId": "owner-hw5-20261028-a84c3885-group",
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "status": "Open"
+      },
+      "passed": true
+    },
+    "level2-owner-session": {
+      "name": "Level 2 GET Owner session",
+      "method": "GET",
+      "path": "/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/reservations/hw5-20261028-a84c3885-reservation/guest-session-id",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:35 GMT",
+        "x-amzn-RequestId": "f5a21888-cf98-497d-96a0-589473665a39",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dx0EzfPHcEuBQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "guestSessionId": "owner-hw5-20261028-a84c3885-group",
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "status": "Open"
+      },
+      "passed": true
+    },
+    "setup-personal-cart": {
+      "name": "Owner personal cart before group submission",
+      "method": "PUT",
+      "path": "/orders/hw5-20261028-a84c3885-reservation",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/orders/hw5-20261028-a84c3885-reservation",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "orderItems": [
+          {
+            "dishId": "hw5-20261028-a84c3885-salad",
+            "quantity": 1,
+            "state": 0
+          }
+        ]
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:38 GMT",
+        "x-amzn-RequestId": "924fd525-ecd2-486b-aae2-3cf81e3dfdb8",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyDEKbvHcEr9g=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": "Pre-order updated successfully.",
+      "passed": true
+    },
+    "setup-join-submitted": {
+      "name": "Join submitted guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Andrii"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:39 GMT",
+        "x-amzn-RequestId": "9902a6e5-77f9-4992-b7d9-cc58457bf718",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyWHWQvHcEMQQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    "setup-menu-submitted": {
+      "name": "Guest menu submitted",
+      "method": "GET",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:41 GMT",
+        "x-amzn-RequestId": "e1515f57-19b7-46b5-98b4-cb8568700574",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DyiHgSvHcEWoQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    "setup-dish-submitted": {
+      "name": "Guest adds dish submitted",
+      "method": "POST",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-salad",
+        "quantity": 2
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:42 GMT",
+        "x-amzn-RequestId": "faf61734-1035-468e-9933-a651f35ee990",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dy1El8vHcEfVw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    "setup-guest-submit": {
+      "name": "Guest confirms own cart",
+      "method": "POST",
+      "path": "/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d0c3d2ae-1f40-4e74-beeb-0f8a916731f8/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {},
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:43 GMT",
+        "x-amzn-RequestId": "e0ca7513-e1c4-4bab-b6a6-afed6cedc442",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzCGjnPHcEejw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Cart submitted successfully."
+      },
+      "passed": true
+    },
+    "setup-join-draft": {
+      "name": "Join draft guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Olena"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:44 GMT",
+        "x-amzn-RequestId": "6937d5cb-8a78-4cf3-ac0e-6e23c04d926f",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzOGyRvHcEizA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    "setup-menu-draft": {
+      "name": "Guest menu draft",
+      "method": "GET",
+      "path": "/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:44 GMT",
+        "x-amzn-RequestId": "1f771a5e-c6ad-4e5e-86ef-5bdb92ca8889",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzRHQDvHcEgYw=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    "setup-dish-draft": {
+      "name": "Guest adds dish draft",
+      "method": "POST",
+      "path": "/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/34b6a16f-7d72-4979-b72b-5ee97e0d8e1a/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-soup",
+        "quantity": 1
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:46 GMT",
+        "x-amzn-RequestId": "05619001-848f-4fdc-9f47-badb25684c71",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzcEMzvHcET1Q=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    "setup-join-remove": {
+      "name": "Join remove guest",
+      "method": "POST",
+      "path": "/guest/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "groupReservationId": "hw5-20261028-a84c3885-group",
+        "guestName": "Remove Test"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:46 GMT",
+        "x-amzn-RequestId": "7e95d6fe-c736-468e-af34-4d36b6124400",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzmE3TPHcEVTA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "SessionId": "d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+        "SessionToken": "[REDACTED]"
+      },
+      "passed": true
+    },
+    "setup-menu-remove": {
+      "name": "Guest menu remove",
+      "method": "GET",
+      "path": "/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/menu",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/menu",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:47 GMT",
+        "x-amzn-RequestId": "2f57ce64-e78e-4dd5-a8e0-c5d0baf15280",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8DzuEVsvHcEVdA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "dishes": {
+          "Appetizer": [
+            {
+              "id": "hw5-20261028-a84c3885-soup",
+              "name": "Test Soup",
+              "description": "Disposable homework verification dish",
+              "price": 220,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            },
+            {
+              "id": "hw5-20261028-a84c3885-salad",
+              "name": "Test Salad",
+              "description": "Disposable homework verification dish",
+              "price": 180,
+              "weight": "200 g",
+              "calories": "100",
+              "proteins": "1",
+              "fats": "1",
+              "carbohydrates": "1",
+              "vitamins": "A",
+              "imageUrl": null,
+              "state": "Available",
+              "selectable": true
+            }
+          ]
+        }
+      },
+      "passed": true
+    },
+    "setup-dish-remove": {
+      "name": "Guest adds dish remove",
+      "method": "POST",
+      "path": "/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/dishes",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4/dishes",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "dishId": "hw5-20261028-a84c3885-salad",
+        "quantity": 1
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:48 GMT",
+        "x-amzn-RequestId": "f00775ab-3f99-4db7-a492-67f1a2a6630c",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8Dz5G0UvHcEQSg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "message": "Dish added successfully."
+      },
+      "passed": true
+    },
+    "level1-sessions": {
+      "name": "Level 1 GET participant snapshot",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:50 GMT",
+        "x-amzn-RequestId": "d2be2278-92cf-4edd-a77f-46bd4fd2d625",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0BGl6vHcEogg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          },
+          {
+            "id": "d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+            "type": "Guest",
+            "name": "Remove Test",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          }
+        ],
+        "total": 940
+      },
+      "passed": true
+    },
+    "level3-delete": {
+      "name": "Level 3 DELETE guest returns updated snapshot",
+      "method": "DELETE",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions/d673405b-f1d6-4d3c-89ea-777dedd62ca4",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:51 GMT",
+        "x-amzn-RequestId": "7e26a13b-36f0-4cb1-a78e-35579a968d29",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0RG0YPHcEdIA=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          }
+        ],
+        "total": 760
+      },
+      "passed": true
+    },
+    "level2-submit": {
+      "name": "Level 2 POST consolidated order",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:54 GMT",
+        "x-amzn-RequestId": "29dd7634-08fa-4a84-9734-5a354a50bc6e",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D0uGRavHcEJxQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": [
+        {
+          "dishId": "hw5-20261028-a84c3885-salad",
+          "quantity": 3
+        }
+      ],
+      "passed": true
+    },
+    "after-submit-snapshot": {
+      "name": "GET snapshot after submission",
+      "method": "GET",
+      "path": "/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/guest/groups/hw5-20261028-a84c3885-group/sessions",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]"
+      },
+      "requestBody": null,
+      "status": 200,
+      "expectedStatus": 200,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:59 GMT",
+        "x-amzn-RequestId": "8f14815c-107d-42f1-8c71-8246e6419cc5",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D1hFmDPHcEEvg=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "participants": [
+          {
+            "id": "owner-hw5-20261028-a84c3885-group",
+            "type": "Owner",
+            "name": "Owner",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 180,
+            "isSubmitted": false
+          },
+          {
+            "id": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a",
+            "type": "Guest",
+            "name": "Olena",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-soup",
+                  "name": "Test Soup",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 220,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 1
+              }
+            ],
+            "total": 220,
+            "isSubmitted": false
+          },
+          {
+            "id": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8",
+            "type": "Guest",
+            "name": "Andrii",
+            "items": [
+              {
+                "dish": {
+                  "id": "hw5-20261028-a84c3885-salad",
+                  "name": "Test Salad",
+                  "description": "Disposable homework verification dish",
+                  "dishType": "Appetizer",
+                  "price": 180,
+                  "weight": "200 g",
+                  "calories": "100",
+                  "proteins": "1",
+                  "fats": "1",
+                  "carbohydrates": "1",
+                  "vitamins": "A",
+                  "imageUrl": null,
+                  "state": "Available"
+                },
+                "quantity": 2
+              }
+            ],
+            "total": 360,
+            "isSubmitted": true
+          }
+        ],
+        "total": 760
+      },
+      "passed": true
+    },
+    "error-repeat-submit": {
+      "name": "POST repeat submission conflict",
+      "method": "POST",
+      "path": "/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "url": "https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop/group-reservations/hw5-20261028-a84c3885-group/submit",
+      "requestHeaders": {
+        "Origin": "http://127.0.0.1:4175",
+        "Authorization": "[REDACTED]",
+        "Content-Type": "application/json"
+      },
+      "requestBody": {
+        "reservationId": "hw5-20261028-a84c3885-reservation"
+      },
+      "status": 409,
+      "expectedStatus": 409,
+      "responseHeaders": {
+        "Content-Type": "application/json",
+        "Date": "Wed, 28 Oct 2026 04:54:59 GMT",
+        "x-amzn-RequestId": "b5fe0650-caeb-4f53-952a-39d022f152ce",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "x-amz-apigw-id": "F8D1pGEtPHcESTQ=",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      },
+      "responseBody": {
+        "error": "This group reservation is no longer open for changes."
+      },
+      "passed": true
+    }
+  },
+  "rows": [
+    {
+      "table": "locationsTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-location"
+      }
+    },
+    {
+      "table": "tablesTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-table"
+      }
+    },
+    {
+      "table": "dishesTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-salad"
+      }
+    },
+    {
+      "table": "dishesTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-soup"
+      }
+    },
+    {
+      "table": "reservationsTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-reservation"
+      }
+    },
+    {
+      "table": "groupReservationsTable",
+      "key": {
+        "groupReservationId": "hw5-20261028-a84c3885-group"
+      }
+    },
+    {
+      "table": "reservationsTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-edge-reservation"
+      }
+    },
+    {
+      "table": "groupReservationsTable",
+      "key": {
+        "groupReservationId": "hw5-20261028-a84c3885-edge-group"
+      }
+    },
+    {
+      "table": "reservationsTable",
+      "key": {
+        "id": "hw5-20261028-a84c3885-no-group-reservation"
+      }
+    },
+    {
+      "table": "groupReservationsTable",
+      "key": {
+        "groupReservationId": "hw5-20261028-a84c3885-orphan-group"
+      }
+    },
+    {
+      "table": "guestSessionTable",
+      "key": {
+        "guestSessionId": "hw5-20261028-a84c3885-edge-guest"
+      }
+    },
+    {
+      "table": "guestSessionTable",
+      "key": {
+        "guestSessionId": "owner-hw5-20261028-a84c3885-group"
+      }
+    },
+    {
+      "table": "ordersTable",
+      "key": {
+        "orderId": "group-hw5-20261028-a84c3885-group",
+        "customerId": "78713300-b001-70bc-7852-a4d4115a4a7f"
+      }
+    },
+    {
+      "table": "guestSessionTable",
+      "key": {
+        "guestSessionId": "d0c3d2ae-1f40-4e74-beeb-0f8a916731f8"
+      }
+    },
+    {
+      "table": "guestSessionTable",
+      "key": {
+        "guestSessionId": "34b6a16f-7d72-4979-b72b-5ee97e0d8e1a"
+      }
+    },
+    {
+      "table": "guestSessionTable",
+      "key": {
+        "guestSessionId": "d673405b-f1d6-4d3c-89ea-777dedd62ca4"
+      }
+    }
+  ],
+  "users": [
+    {
+      "role": "owner",
+      "email": "hw5-20261028-a84c3885-owner@example.com"
+    },
+    {
+      "role": "other",
+      "email": "hw5-20261028-a84c3885-other@example.com"
+    }
+  ],
+  "passed": true,
+  "lambdaVersion": "5",
+  "fixtureIds": {
+    "reservationId": "hw5-20261028-a84c3885-reservation",
+    "groupReservationId": "hw5-20261028-a84c3885-group",
+    "saladId": "hw5-20261028-a84c3885-salad",
+    "soupId": "hw5-20261028-a84c3885-soup"
+  },
+  "scenarioCompleted": true,
+  "cleanup": {
+    "rowsVerifiedAbsent": 16,
+    "usersVerifiedAbsent": 2,
+    "errors": [],
+    "passed": true
+  },
+  "finishedAtUtc": "2026-10-28T04:56:36.084587+00:00",
+  "httpChecksPassed": 49,
+  "httpChecksFailed": 0,
+  "assertionsPassed": 13,
+  "homeworkSourceSha256": "8f3c78a165b6e073aabbb203b72c1e110a8e095e74b718ba412d73769dc8915a"
+}
