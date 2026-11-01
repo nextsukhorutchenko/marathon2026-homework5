@@ -1,0 +1,457 @@
+{
+  "verifiedAtUtc": "2026-11-01T18:24:13.477759+00:00",
+  "mode": "Latest unique case outcomes across three actual runs; not a single 40-case execution",
+  "latestCases": 40,
+  "passed": 40,
+  "failed": 0,
+  "skipped": 0,
+  "apiCases": 32,
+  "uiCases": 8,
+  "levels": {
+    "Level1": 10,
+    "Level2": 16,
+    "Level3": 14
+  },
+  "rawExecutionsInSourceRuns": 44,
+  "sourceRuns": [
+    {
+      "run": "live-api-run1",
+      "trxSha256": "faabbd24d2ef076e99fff24d9f16378a3ed03707df6957b6b0e02303d561f59d"
+    },
+    {
+      "run": "live-ui-run2",
+      "trxSha256": "f584c183bddc352e590c1c2e6ff06a691f75dedd8af520a4b0cef365cca8340a"
+    },
+    {
+      "run": "live-waiter-run1",
+      "trxSha256": "de5a49b24c6f0d49daeb246a7636b2d9526d77dfc8c93e18ff9f14548a53f516"
+    }
+  ],
+  "historicalFailures": [
+    {
+      "run": "live-api-run1",
+      "failed": 4,
+      "reason": "Required Cognito Waiter group absent; temporary group approved and created before retry"
+    },
+    {
+      "run": "live-ui-run1",
+      "failed": 1,
+      "reason": "Default 5s assertion timeout; fixed to 30s and all seven Owner UI cases rerun"
+    }
+  ],
+  "cleanup": {
+    "sourceRunFixtures": 44,
+    "allCleanedAndVerified": true,
+    "pendingJoins": 0,
+    "temporaryWaiterGroupDeletedAndVerified": true,
+    "temporaryGroupIamRoleAssigned": false
+  },
+  "infrastructure": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0
+  },
+  "cases": [
+    {
+      "name": "Missing_group_returns_404",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:41.6291670",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Anonymous\",401)",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:26.0936670",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Guest\",401)",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:27.2848530",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"OtherCustomer\",403)",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:27.7731460",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Waiter\",403)",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:33.1558390",
+      "run": "live-waiter-run1"
+    },
+    {
+      "name": "Owner_sees_all_participants_items_quantities_and_totals",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:22.6635040",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Raw_empty_group_returns_empty_participants_and_zero_total",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:10.4386540",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Total_changes_when_guest_adds_more_of_the_same_dish",
+      "categories": [
+        "Api",
+        "Level1"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:15.1999210",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Assigned_waiter_reads_the_exact_order_submitted_by_owner",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:28.7761930",
+      "run": "live-waiter-run1"
+    },
+    {
+      "name": "Missing_group_is_rejected",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.6348590",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Missing_order_is_rejected_after_valid_submitted_cart",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:20.2065890",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Missing_reservation_is_rejected",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.3367950",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "No_submitted_sessions_is_rejected_with_specific_message",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:19.7425600",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Anonymous\",401)",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:24.9963870",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Guest\",401)",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:29.2919330",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_submit(\"OtherCustomer\",403)",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:29.1222500",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Waiter\",403)",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.9472280",
+      "run": "live-waiter-run1"
+    },
+    {
+      "name": "Owner_personal_contribution_is_included_once",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:21.4510030",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Owner_session_lookup_belongs_to_the_reservation",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:12.4285320",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Repeat_submit_returns_409_without_changing_the_consolidated_order",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.8987780",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Submit_merges_submitted_items_excludes_draft_and_persists_both_statuses",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:29.3177190",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Submitted_cart_without_dishes_is_rejected",
+      "categories": [
+        "Api",
+        "Level2"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:20.9400330",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Foreign_group_guest_is_400_and_neither_group_changes",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:22.8348890",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Missing_guest_is_404",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:24.1699829",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Anonymous\",401)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.5849530",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Guest\",401)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:30.6053060",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"OtherCustomer\",403)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:29.4687520",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Waiter\",403)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.6975860",
+      "run": "live-waiter-run1"
+    },
+    {
+      "name": "Owner_session_cannot_be_removed",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.1101400",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Removing_draft_or_submitted_guest_recalculates_remaining_total(False)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:19.3605790",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Removing_draft_or_submitted_guest_recalculates_remaining_total(True)",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:19.9520530",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Removing_last_guest_returns_empty_list_and_zero_total",
+      "categories": [
+        "Api",
+        "Level3"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:14.6570000",
+      "run": "live-api-run1"
+    },
+    {
+      "name": "Owner_removes_submits_and_waiter_sees_only_remaining_dishes",
+      "categories": [
+        "E2E",
+        "Level3",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:48.6580370",
+      "run": "live-waiter-run1"
+    },
+    {
+      "name": "Authenticated_owner_can_open_the_integrated_menu",
+      "categories": [
+        "Level1",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:20.2680060",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_shows_submitted_draft_empty_carts_and_updates_quantities",
+      "categories": [
+        "Level1",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:33.2181950",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_disables_submit_without_submitted_dishes",
+      "categories": [
+        "Level2",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.1997940",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_submits_merged_submitted_carts_and_locks_order",
+      "categories": [
+        "Level2",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:32.6539820",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_removes_guest_and_recalculates_consolidated_total(False)",
+      "categories": [
+        "Level3",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:32.1057090",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_removes_guest_and_recalculates_consolidated_total(True)",
+      "categories": [
+        "Level3",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:30.2156290",
+      "run": "live-ui-run2"
+    },
+    {
+      "name": "Owner_UI_removes_last_guest_and_returns_to_empty_order",
+      "categories": [
+        "Level3",
+        "Ui"
+      ],
+      "outcome": "Passed",
+      "duration": "00:00:25.0841720",
+      "run": "live-ui-run2"
+    }
+  ]
+}

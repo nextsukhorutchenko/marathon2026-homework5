@@ -1,0 +1,6 @@
+bin/
+obj/
+.env
+test-results/
+playwright-report/
+__pycache__/
