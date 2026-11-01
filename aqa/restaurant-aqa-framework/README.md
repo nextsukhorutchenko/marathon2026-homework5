@@ -2,7 +2,7 @@
 
 Автоматизація власного групового pre-order: **.NET 10 + NUnit + Playwright**, typed HTTP client, Page Objects, ізольовані AWS fixtures та GitHub Actions. ReportPortal не входить в обраний обсяг.
 
-**Стан на 01.11.2026:** підтверджено всі **32 API + 8 UI cases** проти AWS; 22/22 Infrastructure, 4/4 перевірки генератора звітів, 1/1 перевірка SPA-сервера. Це останні результати окремих прогонів: 28 API + 7 UI + 4 повторно перевірені Waiter API + Owner→Waiter E2E. Початкові setup/timeout failures збережено в протоколі. Cleanup усіх fixtures і видалення тимчасової групи перевірено. GitHub Actions cloud run ще не виконувався. [Матриця й протокол](../../docs/homework8/README.md).
+**Стан на 01.11.2026:** [повний GitHub Actions Live All](https://github.com/nextsukhorutchenko/marathon2026-homework5/actions/runs/41339245892) підтвердив **40/40 live cases (32 API + 8 UI)** одним запуском; 22/22 Infrastructure, 4/4 перевірки генератора звітів, 1/1 перевірка SPA-сервера. Cleanup 40/40 та видалення тимчасової Waiter-групи перевірено за фактичними артефактами й AWS. Початковий CI 39/40 із HTTP 504 та попередні локальні setup/timeout failures збережено у [протоколах](../../docs/homework8/README.md); автоматичних retries немає.
 
 ## Структура
 
@@ -128,6 +128,6 @@ Workflow: [homework8-e2e.yml](../../.github/workflows/homework8-e2e.yml).
 
 Repository variables: `AQA_API_BASE_URL`, `AQA_AWS_REGION`, `AQA_AWS_ACCOUNT_ID`, `AQA_COGNITO_USER_POOL_ID`, `AQA_ALLOW_FIXTURE_WRITES=true` та всі `AQA_TABLE_*` із таблиці вище. Secrets: `AQA_AWS_ACCESS_KEY_ID`, `AQA_AWS_SECRET_ACCESS_KEY`, `AQA_AWS_SESSION_TOKEN` для тимчасової сесії. Потрібен достатній час дії сесії на весь run. Публікація workflow не налаштовує ці значення автоматично.
 
-Actions → Homework 8 AQA → Run workflow → suite/level → artifacts `hw8-live-*` → `index.html`. Workflow dispatch доступний у UI після появи workflow у default branch. Для коротких AWS sessions запускай окремі Level subsets з credentials, чинними протягом конкретного run. Поточні live перевірки підтверджені локально; публікація та фактичний GitHub Actions run — окремий наступний крок.
+Actions → Homework 8 AQA → Run workflow → suite/level → artifacts `hw8-live-*` → `index.html`. Workflow є у default branch `main`. Для коротких AWS sessions запускай окремі Level subsets з credentials, чинними протягом конкретного run. [Підтверджений повний запуск](https://github.com/nextsukhorutchenko/marathon2026-homework5/actions/runs/41339245892) і [per-case протокол із SHA-256 артефактів](../../docs/homework8/ci-verification-2026-11-01.json) доступні для перевірки. Перед новим live run підготуй чинні credentials та роль `Waiter`: тимчасову роль прибрано після тестів.
 
 Офіційна документація: [Playwright .NET CI](https://playwright.dev/dotnet/docs/ci), [NUnit adapter settings](https://docs.nunit.org/articles/vs-test-adapter/Tips-And-Tricks.html), [GitHub artifacts](https://github.com/actions/upload-artifact).

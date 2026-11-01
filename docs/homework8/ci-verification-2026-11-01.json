@@ -1,0 +1,248 @@
+{
+  "verifiedAtUtc": "2026-11-01T19:10:40.572061+00:00",
+  "repository": "https://github.com/nextsukhorutchenko/marathon2026-homework5",
+  "implementationPullRequest": "https://github.com/nextsukhorutchenko/marathon2026-homework5/pull/1",
+  "implementationCommit": "e190fe45830b92c25544490a3d0c7a674173ef8d",
+  "workflowRun": "https://github.com/nextsukhorutchenko/marathon2026-homework5/actions/runs/41339245892",
+  "suite": "Live",
+  "level": "All",
+  "infrastructure": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0
+  },
+  "live": {
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "api": 32,
+    "ui": 8
+  },
+  "singleFullLiveExecution": true,
+  "cleanup": {
+    "fixtures": 40,
+    "allCleanedAndVerified": true,
+    "pendingJoins": 0,
+    "temporaryWaiterDeletedAndVerified": true
+  },
+  "previousRun": {
+    "url": "https://github.com/nextsukhorutchenko/marathon2026-homework5/actions/runs/41337739945",
+    "passed": 39,
+    "failed": 1,
+    "skipped": 0,
+    "case": "Removing_last_guest_returns_empty_list_and_zero_total",
+    "actualStatus": 504,
+    "expectedStatus": 200,
+    "message": "Endpoint request timed out",
+    "cleanupFixturesVerified": 40,
+    "pendingJoins": 0,
+    "timingEvidence": "A Lambda invocation in the matching time window took 32888.20ms; exact request correlation was not available.",
+    "controlMethod": "One manual full execution on the same commit with fresh fixtures; no product/assertion changes and no automatic retries."
+  },
+  "artifactHashes": {
+    "infrastructure.zip": "7b3e74f9b24ccf4dc884bd9860276b7c5cf4283d9b5543a0d85c330929e7dd30",
+    "live.zip": "8b6229ccf6b1c892e44535f27332506116f8e4b7d7e08382276f5fb902173a75"
+  },
+  "cases": [
+    {
+      "name": "Assigned_waiter_reads_the_exact_order_submitted_by_owner",
+      "outcome": "Passed",
+      "duration": "00:00:26.0331780"
+    },
+    {
+      "name": "Authenticated_owner_can_open_the_integrated_menu",
+      "outcome": "Passed",
+      "duration": "00:00:08.2928599"
+    },
+    {
+      "name": "Foreign_group_guest_is_400_and_neither_group_changes",
+      "outcome": "Passed",
+      "duration": "00:00:11.2238920"
+    },
+    {
+      "name": "Missing_group_is_rejected",
+      "outcome": "Passed",
+      "duration": "00:00:12.0275950"
+    },
+    {
+      "name": "Missing_group_returns_404",
+      "outcome": "Passed",
+      "duration": "00:00:27.0648930"
+    },
+    {
+      "name": "Missing_guest_is_404",
+      "outcome": "Passed",
+      "duration": "00:00:13.2415760"
+    },
+    {
+      "name": "Missing_order_is_rejected_after_valid_submitted_cart",
+      "outcome": "Passed",
+      "duration": "00:00:12.0135320"
+    },
+    {
+      "name": "Missing_reservation_is_rejected",
+      "outcome": "Passed",
+      "duration": "00:00:13.3814730"
+    },
+    {
+      "name": "No_submitted_sessions_is_rejected_with_specific_message",
+      "outcome": "Passed",
+      "duration": "00:00:09.1688080"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Anonymous\",401)",
+      "outcome": "Passed",
+      "duration": "00:00:13.1308350"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Guest\",401)",
+      "outcome": "Passed",
+      "duration": "00:00:14.6891010"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"OtherCustomer\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:14.3609360"
+    },
+    {
+      "name": "Only_owner_can_read_group_sessions(\"Waiter\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:14.5321650"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Anonymous\",401)",
+      "outcome": "Passed",
+      "duration": "00:00:13.9686190"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Guest\",401)",
+      "outcome": "Passed",
+      "duration": "00:01:28.0546690"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"OtherCustomer\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:55.2572480"
+    },
+    {
+      "name": "Only_owner_can_remove_a_guest(\"Waiter\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:28.8140170"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Anonymous\",401)",
+      "outcome": "Passed",
+      "duration": "00:00:12.6865800"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Guest\",401)",
+      "outcome": "Passed",
+      "duration": "00:00:14.1747670"
+    },
+    {
+      "name": "Only_owner_can_submit(\"OtherCustomer\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:14.9233950"
+    },
+    {
+      "name": "Only_owner_can_submit(\"Waiter\",403)",
+      "outcome": "Passed",
+      "duration": "00:00:14.6290920"
+    },
+    {
+      "name": "Owner_UI_disables_submit_without_submitted_dishes",
+      "outcome": "Passed",
+      "duration": "00:00:27.4811560"
+    },
+    {
+      "name": "Owner_UI_removes_guest_and_recalculates_consolidated_total(False)",
+      "outcome": "Passed",
+      "duration": "00:00:58.1480870"
+    },
+    {
+      "name": "Owner_UI_removes_guest_and_recalculates_consolidated_total(True)",
+      "outcome": "Passed",
+      "duration": "00:00:34.6302760"
+    },
+    {
+      "name": "Owner_UI_removes_last_guest_and_returns_to_empty_order",
+      "outcome": "Passed",
+      "duration": "00:00:18.2090880"
+    },
+    {
+      "name": "Owner_UI_shows_submitted_draft_empty_carts_and_updates_quantities",
+      "outcome": "Passed",
+      "duration": "00:00:27.8780190"
+    },
+    {
+      "name": "Owner_UI_submits_merged_submitted_carts_and_locks_order",
+      "outcome": "Passed",
+      "duration": "00:00:42.3007680"
+    },
+    {
+      "name": "Owner_personal_contribution_is_included_once",
+      "outcome": "Passed",
+      "duration": "00:00:11.6744130"
+    },
+    {
+      "name": "Owner_removes_submits_and_waiter_sees_only_remaining_dishes",
+      "outcome": "Passed",
+      "duration": "00:00:38.7609260"
+    },
+    {
+      "name": "Owner_sees_all_participants_items_quantities_and_totals",
+      "outcome": "Passed",
+      "duration": "00:00:12.8878520"
+    },
+    {
+      "name": "Owner_session_cannot_be_removed",
+      "outcome": "Passed",
+      "duration": "00:00:50.0177690"
+    },
+    {
+      "name": "Owner_session_lookup_belongs_to_the_reservation",
+      "outcome": "Passed",
+      "duration": "00:00:06.2873880"
+    },
+    {
+      "name": "Raw_empty_group_returns_empty_participants_and_zero_total",
+      "outcome": "Passed",
+      "duration": "00:00:04.6003840"
+    },
+    {
+      "name": "Removing_draft_or_submitted_guest_recalculates_remaining_total(False)",
+      "outcome": "Passed",
+      "duration": "00:00:29.3552960"
+    },
+    {
+      "name": "Removing_draft_or_submitted_guest_recalculates_remaining_total(True)",
+      "outcome": "Passed",
+      "duration": "00:00:35.9111780"
+    },
+    {
+      "name": "Removing_last_guest_returns_empty_list_and_zero_total",
+      "outcome": "Passed",
+      "duration": "00:00:08.0656730"
+    },
+    {
+      "name": "Repeat_submit_returns_409_without_changing_the_consolidated_order",
+      "outcome": "Passed",
+      "duration": "00:00:28.9750110"
+    },
+    {
+      "name": "Submit_merges_submitted_items_excludes_draft_and_persists_both_statuses",
+      "outcome": "Passed",
+      "duration": "00:01:26.4760030"
+    },
+    {
+      "name": "Submitted_cart_without_dishes_is_rejected",
+      "outcome": "Passed",
+      "duration": "00:00:42.7969300"
+    },
+    {
+      "name": "Total_changes_when_guest_adds_more_of_the_same_dish",
+      "outcome": "Passed",
+      "duration": "00:00:07.9384730"
+    }
+  ]
+}

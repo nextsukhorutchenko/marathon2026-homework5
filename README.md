@@ -4,6 +4,8 @@
 
 Напрям 1, усі три рівні: .NET/NUnit + Playwright, API clients, Page Objects, AWS fixtures, HTML/TRX та GitHub Actions. [Покриття й стан перевірок](docs/homework8/README.md) · [Запуск тестів](aqa/restaurant-aqa-framework/README.md). Live запуск потребує чинної AWS-сесії; зелений Infrastructure job окремо не підтверджує E2E.
 
+[Повний Live All CI від 01.11.2026](https://github.com/nextsukhorutchenko/marathon2026-homework5/actions/runs/41339245892): **40/40 live (32 API + 8 UI), 22/22 Infrastructure**. Cleanup 40/40 перевірений; тимчасову Waiter-групу видалено. [Машинний протокол CI](docs/homework8/ci-verification-2026-11-01.json) зберігає також початковий прогін 39/40 із HTTP 504.
+
 ## Frontend — ДЗ №6
 
 Owner групового pre-order: усі три рівні та Remove Guest. [Опис, перевірки й скриншоти](docs/homework6/README.md). Демо локально: `http://localhost:4200/reservations/demo-reservation/group-order?demo`. `npm run test:hw` — 85/85; розширений набір — 111/111.
