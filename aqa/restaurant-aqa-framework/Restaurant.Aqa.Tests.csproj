@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageReference Include="NUnit" Version="4.4.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.3.1" />
+    <PackageReference Include="Microsoft.Playwright" Version="1.64.1" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="4.0.1.5" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="4.0.1.4" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="4.0.101.7" />
+  </ItemGroup>
+  <ItemGroup><Using Include="NUnit.Framework" /></ItemGroup>
+</Project>

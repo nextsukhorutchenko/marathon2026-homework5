@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration><ResultsDirectory>test-results</ResultsDirectory></RunConfiguration>
+  <NUnit>
+    <NumberOfTestWorkers>2</NumberOfTestWorkers>
+    <TestOutputXml>nunit</TestOutputXml>
+    <OutputXmlFolderMode>UseResultDirectory</OutputXmlFolderMode>
+  </NUnit>
+</RunSettings>

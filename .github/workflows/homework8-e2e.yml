@@ -1,0 +1,173 @@
+name: Homework 8 AQA
+
+on:
+  push:
+    paths: ['aqa/**', '.github/workflows/homework8-e2e.yml']
+  pull_request:
+    paths: ['aqa/**', '.github/workflows/homework8-e2e.yml']
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Live suite (writes isolated AWS fixtures)
+        type: choice
+        options: [Live, Api, Ui]
+        default: Live
+      level:
+        description: Homework level
+        type: choice
+        options: [All, '1', '2', '3']
+        default: All
+
+permissions:
+  contents: read
+
+jobs:
+  infrastructure:
+    name: Infrastructure checks (no live API/UI)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: aqa/restaurant-aqa-framework
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: aqa/restaurant-aqa-framework/packages.lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.22.3'
+      - name: Report and SPA server checks
+        run: |
+          python -m unittest discover -s scripts -p test_report.py
+          node --test scripts/serve-ui.test.mjs
+      - run: dotnet restore --locked-mode
+      - name: Infrastructure tests
+        id: tests
+        continue-on-error: true
+        run: dotnet test --no-restore --settings .runsettings --filter TestCategory=Infrastructure --logger 'trx;LogFileName=results.trx' --results-directory test-results
+      - name: Generate HTML even if setup/tests failed
+        if: always()
+        id: report
+        continue-on-error: true
+        run: python scripts/report.py test-results
+      - name: Upload infrastructure report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hw8-infrastructure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: aqa/restaurant-aqa-framework/test-results/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve failure after artifact upload
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          REPORT_OUTCOME: ${{ steps.report.outcome }}
+        run: test "$TEST_OUTCOME" = success && test "$REPORT_OUTCOME" = success
+
+  live:
+    name: Live AWS API/UI — ${{ inputs.suite }} / level ${{ inputs.level }}
+    if: github.event_name == 'workflow_dispatch'
+    needs: infrastructure
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: aqa/restaurant-aqa-framework
+    env:
+      API_BASE_URL: ${{ vars.AQA_API_BASE_URL }}
+      UI_BASE_URL: http://127.0.0.1:4200
+      AWS_REGION: ${{ vars.AQA_AWS_REGION }}
+      AWS_ACCOUNT_ID: ${{ vars.AQA_AWS_ACCOUNT_ID }}
+      COGNITO_USER_POOL_ID: ${{ vars.AQA_COGNITO_USER_POOL_ID }}
+      AQA_ALLOW_FIXTURE_WRITES: ${{ vars.AQA_ALLOW_FIXTURE_WRITES }}
+      AQA_TABLE_LOCATIONS: ${{ vars.AQA_TABLE_LOCATIONS }}
+      AQA_TABLE_TABLES: ${{ vars.AQA_TABLE_TABLES }}
+      AQA_TABLE_DISHES: ${{ vars.AQA_TABLE_DISHES }}
+      AQA_TABLE_RESERVATIONS: ${{ vars.AQA_TABLE_RESERVATIONS }}
+      AQA_TABLE_GROUPS: ${{ vars.AQA_TABLE_GROUPS }}
+      AQA_TABLE_SESSIONS: ${{ vars.AQA_TABLE_SESSIONS }}
+      AQA_TABLE_ORDERS: ${{ vars.AQA_TABLE_ORDERS }}
+      AQA_TABLE_WAITERS: ${{ vars.AQA_TABLE_WAITERS }}
+      AQA_RESULTS_DIR: ${{ github.workspace }}/aqa/restaurant-aqa-framework/test-results
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: aqa/restaurant-aqa-framework/packages.lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        if: inputs.suite != 'Api'
+        with:
+          node-version: '22.22.3'
+          cache: npm
+          cache-dependency-path: frontend/restaurant-frontend-app/package-lock.json
+      - run: dotnet restore --locked-mode
+      - run: dotnet build --no-restore
+      - name: Install Chromium and system dependencies
+        if: inputs.suite != 'Api'
+        shell: pwsh
+        run: ./bin/Debug/net10.0/playwright.ps1 install --with-deps chromium
+      - name: Build integrated production frontend
+        if: inputs.suite != 'Api'
+        working-directory: frontend/restaurant-frontend-app
+        env:
+          BACKEND_URL: ${{ vars.AQA_API_BASE_URL }}
+        run: |
+          npm ci
+          npm run build
+      - name: Start local production UI
+        if: inputs.suite != 'Api'
+        run: |
+          mkdir -p test-results
+          node scripts/serve-ui.mjs > test-results/ui-server.log 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/hw8-ui.pid"
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4200/__aqa_health >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Run live tests
+        id: tests
+        continue-on-error: true
+        shell: pwsh
+        env:
+          REQUESTED_SUITE: ${{ inputs.suite }}
+          REQUESTED_LEVEL: ${{ inputs.level }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AQA_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AQA_AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AQA_AWS_SESSION_TOKEN }}
+        run: ./scripts/run-tests.ps1 -Suite $env:REQUESTED_SUITE -Level $env:REQUESTED_LEVEL -ResultsDirectory $env:AQA_RESULTS_DIR
+      - name: Generate HTML even after setup/test/cleanup failure
+        if: always()
+        id: report
+        continue-on-error: true
+        run: python scripts/report.py test-results
+      - name: Stop production UI
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/hw8-ui.pid" ]; then kill "$(cat "$RUNNER_TEMP/hw8-ui.pid")" || true; fi
+      - name: Upload live results and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: hw8-live-${{ inputs.suite }}-level-${{ inputs.level }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: aqa/restaurant-aqa-framework/test-results/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Preserve failure after artifact upload
+        if: always()
+        env:
+          TEST_OUTCOME: ${{ steps.tests.outcome }}
+          REPORT_OUTCOME: ${{ steps.report.outcome }}
+        run: test "$TEST_OUTCOME" = success && test "$REPORT_OUTCOME" = success

@@ -1,5 +1,9 @@
 # EPAM IT Marathon 2026 — Backend (.NET), ДЗ №5
 
+## Test Automation — ДЗ №8
+
+Напрям 1, усі три рівні: .NET/NUnit + Playwright, API clients, Page Objects, AWS fixtures, HTML/TRX та GitHub Actions. [Покриття й стан перевірок](docs/homework8/README.md) · [Запуск тестів](aqa/restaurant-aqa-framework/README.md). Live запуск потребує чинної AWS-сесії; зелений Infrastructure job окремо не підтверджує E2E.
+
 ## Frontend — ДЗ №6
 
 Owner групового pre-order: усі три рівні та Remove Guest. [Опис, перевірки й скриншоти](docs/homework6/README.md). Демо локально: `http://localhost:4200/reservations/demo-reservation/group-order?demo`. `npm run test:hw` — 85/85; розширений набір — 111/111.
