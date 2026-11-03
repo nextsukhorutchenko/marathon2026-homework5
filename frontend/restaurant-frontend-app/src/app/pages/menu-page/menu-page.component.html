@@ -29,6 +29,25 @@
 
   <section class="content-sections">
     <div class="menu-section">
+      <form class="menu-search" role="search" aria-label="Search menu" (submit)="search($event)">
+        <label for="dishSearch">Search dishes by name</label>
+        <div class="menu-search__controls">
+          <input
+            id="dishSearch"
+            type="search"
+            name="q"
+            placeholder="e.g. salad"
+            [value]="searchDraft()"
+            (input)="onSearchInput($event)"
+          />
+          <button type="submit">Search</button>
+          @if (searchTerm() || searchDraft()) {
+            <button class="menu-search__clear" type="button" (click)="clearSearch()">
+              Clear search
+            </button>
+          }
+        </div>
+      </form>
       <div class="filter-sort-bar">
         <div class="category-buttons">
           @for (category of menuCategories; track category) {
@@ -53,17 +72,42 @@
         </div>
       </div>
 
-      <div class="dish-cards">
-        @for (dish of filteredDishes; track dish) {
-          <app-dish-card
-            [dish]="dish"
-            [preOrderEnabled]="isPreOrderEnabled"
-            (dishClicked)="openModal(dish)"
-            (preOrderClicked)="addDishToCart(dish)"
-            maxWidth="288px"
-          ></app-dish-card>
-        }
-      </div>
+      @if (loading()) {
+        <p role="status">Loading dishes…</p>
+      } @else if (loadError()) {
+        <div class="menu-message" role="alert">
+          <p>Could not load dishes. Please try again.</p>
+          <button type="button" (click)="loadDishes()">Try again</button>
+        </div>
+      } @else if (filteredDishes.length === 0) {
+        <p role="status">
+          @if (searchTerm() || selectedCategory) {
+            No dishes match
+            @if (searchTerm()) {
+              “{{ searchTerm() }}”
+            }
+            your selected filters.
+          } @else {
+            No dishes available at the moment.
+          }
+        </p>
+      } @else {
+        <p role="status">
+          {{ filteredDishes.length }}
+          {{ filteredDishes.length === 1 ? 'dish found' : 'dishes found' }}
+        </p>
+        <div class="dish-cards" [attr.aria-label]="'Menu results'">
+          @for (dish of filteredDishes; track dish) {
+            <app-dish-card
+              [dish]="dish"
+              [preOrderEnabled]="isPreOrderEnabled"
+              (dishClicked)="openModal(dish)"
+              (preOrderClicked)="addDishToCart(dish)"
+              maxWidth="288px"
+            ></app-dish-card>
+          }
+        </div>
+      }
     </div>
   </section>
 

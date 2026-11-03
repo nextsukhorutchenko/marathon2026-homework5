@@ -1,0 +1,45 @@
+RegisterComponent should create
+GeneralInformationComponent handles FileReader errors and preserves the displayed photo
+GeneralInformationComponent does not mark a newer selection saved when an earlier upload finishes
+GeneralInformationComponent tears down a pending image fetch and stops listening for user updates
+GeneralInformationComponent handles a profile image fetch failure
+GeneralInformationComponent aborts an unfinished FileReader when destroyed
+GeneralInformationComponent tears down a pending name save when destroyed
+GeneralInformationComponent uploads a selected photo without resaving unchanged names
+GeneralInformationComponent treats a falsy profile response as a failure
+GeneralInformationComponent rejects unsupported file type text/plain before reading
+GeneralInformationComponent tears down a pending photo upload when destroyed
+GeneralInformationComponent prevents duplicate submissions while saving
+GeneralInformationComponent ignores an old image fetch after a new photo was saved
+GeneralInformationComponent reports a partial save and retries only the failed photo
+GeneralInformationComponent rejects images that cannot be decoded
+GeneralInformationComponent blocks saving while a file is being read or validated
+GeneralInformationComponent rejects dimensions 200 × 4097
+GeneralInformationComponent rejects the first name "Alice!"
+GeneralInformationComponent rejects the first name "Alice Smith"
+GeneralInformationComponent accepts the exact size and dimension limits
+GeneralInformationComponent rejects dimensions 4097 × 200
+GeneralInformationComponent shows an error when saving names fails
+GeneralInformationComponent rejects the first name "Alice1"
+GeneralInformationComponent accepts 50 characters and rejects 51 in lastName
+GeneralInformationComponent marks empty names touched and blocks saving
+GeneralInformationComponent rejects files larger than 5 MB before reading
+GeneralInformationComponent rejects empty files before reading
+GeneralInformationComponent does not reload the image for a same-user update
+GeneralInformationComponent accepts apostrophes and hyphens in names
+GeneralInformationComponent saves changed names with the correct arguments without uploading an unchanged photo
+GeneralInformationComponent accepts 50 characters and rejects 51 in firstName
+GeneralInformationComponent creates the component and loads the current user photo
+GeneralInformationComponent rejects unsupported file type image/svg+xml before reading
+MakeReservationComponent should create
+ReservationConfirmedComponent should create
+ReservationDashboardComponent should create
+ReportingDashboardComponent should create
+WaiterPreOrderPageComponent should create
+WaiterDashboardComponent should create
+TimeSlotsModalComponent should create
+PlaceOrderWaiterComponent should create
+DishModalComponent should create
+TimeSlotComponent should create
+DishSelectCardComponent should create
+AppComponent should render title

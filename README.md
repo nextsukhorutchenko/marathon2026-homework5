@@ -1,5 +1,9 @@
 # EPAM IT Marathon 2026 — Backend (.NET), ДЗ №5
 
+## Рівень 3 — розгорнутий застосунок і пошук страв
+
+Публічний сайт: [Green & Tasty](https://green-and-tasty-level3.vercel.app). [Пошук у меню](https://green-and-tasty-level3.vercel.app/menu?q=salad&sort=PriceAscending): реальний AWS API, фільтр за назвою, категорія, сортування, URL зі збереженим запитом, Clear search і відновлення після помилки. [Реалізація, розгортання та перевірки](docs/level3/README.md).
+
 ## Test Automation — ДЗ №8
 
 Напрям 1, усі три рівні: .NET/NUnit + Playwright, API clients, Page Objects, AWS fixtures, HTML/TRX та GitHub Actions. [Покриття й стан перевірок](docs/homework8/README.md) · [Запуск тестів](aqa/restaurant-aqa-framework/README.md). Live запуск потребує чинної AWS-сесії; зелений Infrastructure job окремо не підтверджує E2E.
@@ -29,7 +33,7 @@ Backend API: https://njnyvufs51.execute-api.us-west-2.amazonaws.com/develop
 Перевірка AWS від 28.10.2026: **49/49 HTTP-перевірок та 13/13 перевірок даних**.
 Backend unit-тести повторно виконані 30.10.2026: **184 passed, 0 failed**. Тестові записи й користувачі після сценарію видалені; ідентифікатори в прикладах історичні. Токени й паролі вилучені з доказів.
 
-Стан frontend на 30.10.2026: production build завантажений у приватний S3. AWS відмовив у доступі до CloudFront; повторне створення 30.10 повернуло 403 AccessDenied. Публічного URL frontend наразі немає. Це не змінює реалізацію endpoint-ів ДЗ; для запуску UI локально див. інструкцію нижче.
+Frontend: приватний S3 збережено, CloudFront 02.11.2026 повторно повернув 403 AccessDenied через вимогу верифікації акаунта AWS. Публічний frontend розгорнуто у Vercel; backend продовжує працювати в AWS. Для запуску UI локально див. інструкцію нижче.
 
 # Deployment Guide
 
