@@ -15,6 +15,7 @@ node_modules/
 # Local env
 .env
 .env.local
+**/.vercel/
 
 # Terraform
 **/.terraform/

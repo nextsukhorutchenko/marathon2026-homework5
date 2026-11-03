@@ -121,6 +121,7 @@
 
 .category-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
 
   button {
@@ -137,6 +138,63 @@
       color: color.$neutral-0;
     }
   }
+}
+
+.menu-search {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: color.$neutral-900;
+    font-weight: 600;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    max-width: 48rem;
+  }
+
+  input {
+    flex: 1 1 15rem;
+    min-width: 0;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid color.$neutral-600;
+    border-radius: 8px;
+    background: color.$neutral-0;
+    font: inherit;
+  }
+
+  button {
+    padding: 0.75rem 1rem;
+    border: 1px solid color.$green-600;
+    border-radius: 8px;
+    background: color.$green-600;
+    color: color.$neutral-0;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button.menu-search__clear {
+    background: color.$neutral-0;
+    color: color.$green-800;
+  }
+
+  input:focus-visible,
+  button:focus-visible {
+    outline: 3px solid color.$green-800;
+    outline-offset: 3px;
+  }
+}
+
+.menu-message {
+  padding: 1rem;
+  border: 1px solid color.$neutral-400;
+  border-radius: 8px;
 }
 
 .sort-dropdown {

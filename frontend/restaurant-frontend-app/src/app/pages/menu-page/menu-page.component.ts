@@ -1,4 +1,13 @@
-import {Component, OnInit, ChangeDetectionStrategy, inject} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  DestroyRef,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { finalize, Subscription } from 'rxjs';
 import { DishCardComponent } from '@app/shared/custom-components/dish-card/dish-card.component';
 import { DishesService } from '@app/services/dishes/dishes.service';
 import { DishListResponse } from '@app/models/dishes/dish-list-response.model';
@@ -9,17 +18,12 @@ import { DishType } from '@app/models/enums/dish-type.model';
 import { DishSortingLabels, DishTypeLabels } from '@app/shared/mappers/dish-enum.mapper';
 import { DishModalComponent } from '@app/components/dish-modal/dish-modal.component';
 import { PreOrdersService } from '@app/services/pre-orders/pre-orders.service';
-import {ToastService} from '@app/services/toast/toast.service';
+import { ToastService } from '@app/services/toast/toast.service';
 
 @Component({
   selector: 'app-menu-page',
   standalone: true,
-  imports: [
-    RouterModule,
-    DishCardComponent,
-    MainCoverImageComponent,
-    DishModalComponent
-  ],
+  imports: [RouterModule, DishCardComponent, MainCoverImageComponent, DishModalComponent],
   templateUrl: './menu-page.component.html',
   styleUrl: './menu-page.component.scss',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -27,6 +31,12 @@ import {ToastService} from '@app/services/toast/toast.service';
 })
 export class MenuPageComponent implements OnInit {
   private toast = inject(ToastService);
+  private readonly destroyRef = inject(DestroyRef);
+  private dishesRequest: Subscription | null = null;
+  readonly searchDraft = signal('');
+  readonly searchTerm = signal('');
+  readonly loading = signal(false);
+  readonly loadError = signal(false);
   dishes: DishListResponse[] = [];
   filteredDishes: DishListResponse[] = [];
 
@@ -46,10 +56,13 @@ export class MenuPageComponent implements OnInit {
   private readonly dishesService = inject(DishesService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private  readonly orderService = inject(PreOrdersService);
+  private readonly orderService = inject(PreOrdersService);
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+      const query = typeof params['q'] === 'string' ? params['q'].trim() : '';
+      this.searchTerm.set(query);
+      this.searchDraft.set(query);
       const preOrder = params['preOrder'];
       this.isPreOrderEnabled = !!preOrder;
       if (this.isPreOrderEnabled) {
@@ -75,27 +88,64 @@ export class MenuPageComponent implements OnInit {
   }
 
   loadDishes(): void {
+    this.dishesRequest?.unsubscribe();
+    this.loading.set(true);
+    this.loadError.set(false);
+    this.dishes = [];
+    this.filteredDishes = [];
+    this.selectedDish = null;
     const category = this.selectedCategory ?? undefined;
     const sort = this.selectedSort;
 
-    this.dishesService.getDishes(category, sort).subscribe((data) => {
-      this.dishes = data.map((dish) => ({
-        ...dish,
-        imageUrl: dish.imageUrl || 'assets/img/dish.png',
-        name: dish.name || 'Unknown Dish',
-        price: dish.price || 0,
-        weight: dish.weight || 'N/A',
-        description: dish.description || 'N/A',
-        state: dish.state || 'N/A',
-        dishType: dish.dishType || 'N/A',
-        calories: dish.calories || '0',
-        proteins: dish.proteins || '0',
-        fats: dish.fats || '0',
-        carbohydrates: dish.carbohydrates || '0',
-        vitamins: dish.vitamins || '0',
-      }));
+    this.dishesRequest = this.dishesService
+      .getDishes(category, sort, this.searchTerm() || undefined)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading.set(false))
+      )
+      .subscribe({
+        next: (data) => {
+          this.dishes = data.map((dish) => ({
+            ...dish,
+            imageUrl: dish.imageUrl || 'assets/img/dish.png',
+            name: dish.name || 'Unknown Dish',
+            price: dish.price || 0,
+            weight: dish.weight || 'N/A',
+            description: dish.description || 'N/A',
+            state: dish.state || 'N/A',
+            dishType: dish.dishType || 'N/A',
+            calories: dish.calories || '0',
+            proteins: dish.proteins || '0',
+            fats: dish.fats || '0',
+            carbohydrates: dish.carbohydrates || '0',
+            vitamins: dish.vitamins || '0',
+          }));
 
-      this.filteredDishes = this.dishes;
+          this.filteredDishes = this.dishes;
+        },
+        error: () => this.loadError.set(true),
+      });
+  }
+
+  search(event: Event): void {
+    event.preventDefault();
+    this.updateSearch(this.searchDraft().trim());
+  }
+
+  onSearchInput(event: Event): void {
+    this.searchDraft.set((event.target as HTMLInputElement).value);
+  }
+
+  clearSearch(): void {
+    this.searchDraft.set('');
+    this.updateSearch('');
+  }
+
+  private updateSearch(query: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { q: query || null },
+      queryParamsHandling: 'merge',
     });
   }
 

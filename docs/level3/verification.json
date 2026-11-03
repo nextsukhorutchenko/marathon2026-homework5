@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-02",
+  "sourceBase": "e281086977dcfcaa046d9595de83274a4251ede6",
+  "sourceStateAtVerification": "working-tree-on-sourceBase-before-publication",
+  "frontendVersion": "1.1.4",
+  "deployment": {
+    "firstDeploymentAutomaticallyAssignedProduction": true,
+    "cliProdFlagUsed": false,
+    "id": "dpl_CSKfzJKAAyfeABFiDCd46kcZBFRz",
+    "url": "https://green-and-tasty-level3.vercel.app",
+    "readyState": "READY",
+    "target": "production",
+    "host": "Vercel",
+    "publicBrowserVerified": true,
+    "project": "green-and-tasty-level3"
+  },
+  "tests": {
+    "targeted": {
+      "failed": 0,
+      "passed": 13
+    },
+    "typeScriptSpec": "passed",
+    "productionBuild": "Bundle check passed",
+    "typeScriptApp": "passed",
+    "initialBundleBytes": 799740,
+    "searchAndGroupPreorder": {
+      "failed": 0,
+      "passed": 98
+    },
+    "fullFrontend": {
+      "failed": 45,
+      "newFailures": 0,
+      "knownFailuresFile": "known-test-failures.txt",
+      "passed": 298
+    }
+  },
+  "browser": {
+    "base": "https://green-and-tasty-level3.vercel.app",
+    "checks": [
+      "public direct menu route and six real AWS dishes",
+      "Enter trims search and writes URL",
+      "case-insensitive API search",
+      "sort combines with search",
+      "category combines with search and sort",
+      "URL reload restores search and filters",
+      "Clear retains other filters",
+      "Back restores the previous search",
+      "unmatched query shows useful empty state",
+      "whitespace clears API filter",
+      "existing dish detail modal works",
+      "375px layout has no horizontal overflow",
+      "network failure exposes retry without stale results",
+      "retry succeeds against the real API and retains query"
+    ],
+    "total": 14,
+    "data": "Real AWS catalogue; only network-failure check uses deliberate request abort"
+  },
+  "awsCloudFront": {
+    "requestId": "9d9124da-b587-4007-b376-7017667631db",
+    "httpStatus": 403,
+    "status": "AccessDenied",
+    "distributionCreated": false
+  },
+  "demoData": {
+    "marker": "level3-menu-v1",
+    "created": 9,
+    "verified": 9,
+    "records": [
+      {
+        "table": "Locations",
+        "id": "level3-demo-green-tasty"
+      },
+      {
+        "table": "Tables",
+        "id": "level3-demo-table-1"
+      },
+      {
+        "table": "Tables",
+        "id": "level3-demo-table-2"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-spring-salad"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-strawberry-salad"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-lentil-salad"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-avocado-bowl"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-lemon-pasta"
+      },
+      {
+        "table": "Dishes",
+        "id": "level3-demo-berry-dessert"
+      }
+    ]
+  },
+  "reproducibleBuild": {
+    "fileCount": 96,
+    "indexSha256": "65EDF1FDE1D2B6047C1210130AD48328BC307794DF3D90A8AE29A7B405B8C2CE",
+    "everyFileEqualsUploadedBuild": true,
+    "algorithm": "SHA256"
+  }
+}
